@@ -55,23 +55,18 @@ public class WidgetInfo implements Widget{
 
     @Override
     public String name(Locale locale) {
-        if (locale.equals(Locale.CHINESE)) {
-            return "A custom Widget";
+        if (locale.equals(Locale.CHINA)) {
+            return "顶部导航";
         }
         return "topNavigation";
     }
 
     @Override
-    public String description() {
-        return "这是一个 A custom Widget，你可以对组件进行自定义修改。";
-    }
-
-    @Override
     public String description(Locale locale) {
-        if (locale.equals(Locale.CHINESE)) {
-            return description();
+        if (locale.equals(Locale.CHINA)) {
+            return "这是一个顶部导航组件，你可以对组件进行自定义修改。";
         }
-        return "This is a topNavigation,  you can make custom change the component.";
+        return "This is a top Navigation,  you can make custom change the component.";
     }
 
     @Override
