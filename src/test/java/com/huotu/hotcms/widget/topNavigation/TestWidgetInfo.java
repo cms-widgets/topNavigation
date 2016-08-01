@@ -9,26 +9,22 @@
 
 package com.huotu.hotcms.widget.topNavigation;
 
-import com.huotu.hotcms.service.model.NavbarPageInfoModel;
 import com.huotu.hotcms.widget.ComponentProperties;
 import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
 import com.huotu.hotcms.widget.entity.PageInfo;
 import com.huotu.widget.test.WidgetTest;
-import com.huotu.widget.test.WidgetTestConfig;
-import com.huotu.widget.test.bean.WidgetViewController;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 /**
  * @author CJ
@@ -40,15 +36,11 @@ public class TestWidgetInfo extends WidgetTest {
         return true;
     }
 
-    @Autowired
-    private WidgetViewController widgetViewController;
-
     @Override
     protected void editorWork(Widget widget, WebElement editor, Supplier<Map<String, Object>> currentWidgetProperties) {
-        try{
+        try {
             currentWidgetProperties.get();
-            assert false;
-        }catch (IllegalStateException ignored){
+        } catch (IllegalStateException ignored) {
             assertThat(0).as("save没有属性值，返回异常").isEqualTo(0);
         }
         WebElement treeview = editor.findElement(By.id("navbar-treeview"));
@@ -61,11 +53,11 @@ public class TestWidgetInfo extends WidgetTest {
         WebElement logoDiv = editor.findElement(By.id("logoFile"));
         List<WebElement> input = logoDiv.findElements(By.name("file"));
         assertThat(input).isNotNull();
-        assertThat(input.size()).isNotEqualTo(0);
+        assertThat(input.size()).as("图片上传插件").isNotEqualTo(0);
 
-        try{
+        try {
             currentWidgetProperties.get();
-        }catch (IllegalStateException ignored){
+        } catch (IllegalStateException ignored) {
             assertThat(0).as("save没有属性值，返回异常").isEqualTo(0);
         }
 
@@ -73,27 +65,8 @@ public class TestWidgetInfo extends WidgetTest {
 
     @Override
     protected void browseWork(Widget widget, WidgetStyle style, Function<ComponentProperties, WebElement> uiChanger) {
-        uiChanger = (properties) -> {
-            widgetViewController.setCurrentProperties(properties);
-            String uri = "/browse/" + WidgetTestConfig.WidgetIdentity(widget) + "/" + style.id();
-            if (printPageSource())
-                try {
-                    mockMvc.perform(get(uri))
-                            .andDo(print());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    throw new IllegalStateException("no print html");
-                }
-            driver.get("http://localhost" + uri);
-            WebElement webElement = driver.findElement(By.id("browse")).findElement(By.tagName("div"));
-            return webElement;
-        };
         ComponentProperties componentProperties = new ComponentProperties();
         ComponentProperties properties = new ComponentProperties();
-        properties.put("pagingTColor", "#eeeeee");
-        properties.put("pagingHColor", "#111111");
-        properties.put("logoFileUri", "http://www.baidu.com");
-
         PageInfo pageInfo1 = new PageInfo();
         pageInfo1.setTitle("首页");
         pageInfo1.setPagePath("");
@@ -135,22 +108,21 @@ public class TestWidgetInfo extends WidgetTest {
         list.add(gnxw);
         list.add(zjxw);
 
-        List<NavbarPageInfoModel> navbarPageInfoModels = new ArrayList<>();
+        List<Map<String, Object>> navbarPageInfoModels = new ArrayList<>();
         for (PageInfo pageInfo : list) {
-            NavbarPageInfoModel navbarPageInfoModel = new NavbarPageInfoModel();
-            navbarPageInfoModel.setText(pageInfo.getTitle());
-            navbarPageInfoModel.setHref(pageInfo.getPagePath());
-            navbarPageInfoModel.setPageId(pageInfo.getPageId());
-            navbarPageInfoModel.setParentId(pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
-            navbarPageInfoModels.add(navbarPageInfoModel);
+            Map<String, Object> map = new HashMap<>();
+            map.put("text", pageInfo.getTitle());
+            map.put("href", pageInfo.getPagePath());
+            map.put("pageId", pageInfo.getPageId());
+            map.put("parentId", pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
+            navbarPageInfoModels.add(map);
         }
-        properties.put("pageIds", navbarPageInfoModels);
-
-
+        properties.put(WidgetInfo.VALID_STYLE_TEXT_COLOR, "#eeeeee");
+        properties.put(WidgetInfo.VALID_STYLE_TEXT_HOVER_COLOR, "#111111");
+        properties.put(WidgetInfo.VALID_LOGO_FILE_URI, "http://placehold.it/106x82?text=logo");
+        properties.put(WidgetInfo.VALID_PAGE_IDS, navbarPageInfoModels);
         componentProperties.put("properties", properties);
-
         WebElement webElement = uiChanger.apply(componentProperties);
-
         List<WebElement> tonavs = webElement.findElements(By.className("topNavigation"));
         assertThat(tonavs.get(0).getText()).isEqualToIgnoringCase("首页");
 

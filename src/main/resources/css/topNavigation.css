@@ -1,7 +1,7 @@
 #[[${componentId}]].topNavigation{
-    color:[[${properties.pagingTColor}]];
+    color:[[${properties['pagingTColor']}]];
 }
 
 #[[${componentId}]].topNavigation:hover{
-    color:[[${properties.pagingHColor}]];
+    color:[[${properties['pagingHColor']}]];
 }

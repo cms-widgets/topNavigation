@@ -22,8 +22,9 @@ import me.jiangcai.lib.resource.service.ResourceService;
 import org.apache.http.entity.ContentType;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 
@@ -33,8 +34,8 @@ import java.util.Map;
 public class WidgetInfo implements Widget{
     public static final String VALID_STYLE_TEXT_COLOR = "pagingTColor";
     public static final String VALID_STYLE_TEXT_HOVER_COLOR = "pagingHColor";
-    public static final String VALID_PAGEIDS = "pageIds";
-    public static final String VALIE_LOGO_FILE_URI = "logoFileUri";
+    public static final String VALID_PAGE_IDS = "pageIds";
+    public static final String VALID_LOGO_FILE_URI = "logoFileUri";
 
     /*
      * 指定风格的模板类型 如：html,text等
@@ -85,24 +86,22 @@ public class WidgetInfo implements Widget{
 
 
     @Override
-    public Resource widgetJs() {
-        return new ClassPathResource("js/topNavigation.js", getClass().getClassLoader());
-    }
-
-
-    @Override
     public Map<String, Resource> publicResources() {
         Map<String, Resource> map = new HashMap<>();
         map.put("thumbnail/defaultStyleThumbnail.png",new ClassPathResource("thumbnail/defaultStyleThumbnail.png"
                 ,getClass().getClassLoader()));
         map.put("img/logo.png",new ClassPathResource("img/logo.png" ,getClass().getClassLoader()));
+        map.put("js/topNavigation.js",new ClassPathResource("js/topNavigation.js" ,getClass().getClassLoader()));
         return map;
     }
 
     @Override
-    public Resource widgetDependencyContent(ContentType contentType) {
-        if (contentType.getMimeType().equalsIgnoreCase("text/css")){
+    public Resource widgetDependencyContent(MediaType mediaType) {
+        if (mediaType.isCompatibleWith(CSS)){
             return  new ClassPathResource("css/topNavigation.css",getClass().getClassLoader());
+        }
+        if (mediaType.isCompatibleWith(Javascript)){
+            return  new ClassPathResource("js/topNavigation.js",getClass().getClassLoader());
         }
         return null;
     }
@@ -125,8 +124,8 @@ public class WidgetInfo implements Widget{
         //加入控件独有的属性验证
         String textColor = (String) componentProperties.get(VALID_STYLE_TEXT_COLOR);
         String hoverColor = (String) componentProperties.get(VALID_STYLE_TEXT_HOVER_COLOR);
-        String logoFileUri = (String) componentProperties.get(VALIE_LOGO_FILE_URI);
-        List<NavbarPageInfoModel> pageIds = (List) componentProperties.get(VALID_PAGEIDS);
+        String logoFileUri = (String) componentProperties.get(VALID_LOGO_FILE_URI);
+        List pageIds = (List) componentProperties.get(VALID_PAGE_IDS);
 
         if (logoFileUri == null ||textColor == null ||  hoverColor == null || pageIds== null ||logoFileUri.equals("")
                 || textColor.equals("") ||  hoverColor.equals("") || pageIds.size()<=0) {
@@ -187,17 +186,19 @@ public class WidgetInfo implements Widget{
         list.add(pageInfo3);
         list.add(gnxw);
         list.add(zjxw);
-
-        List<NavbarPageInfoModel> navbarPageInfoModels = new ArrayList<>();
+        List<Map<String,Object>> navbarPageInfoModels = new ArrayList<>();
         for (PageInfo pageInfo : list) {
-            NavbarPageInfoModel navbarPageInfoModel = new NavbarPageInfoModel();
-            navbarPageInfoModel.setText(pageInfo.getTitle());
-            navbarPageInfoModel.setHref(pageInfo.getPagePath());
-            navbarPageInfoModel.setPageId(pageInfo.getPageId());
-            navbarPageInfoModel.setParentId(pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
-            navbarPageInfoModels.add(navbarPageInfoModel);
+            Map<String,Object> map = new HashMap<>();
+            map.put("text",pageInfo.getTitle());
+            map.put("href",pageInfo.getPagePath());
+            map.put("pageId",pageInfo.getPageId());
+            map.put("parentId",pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
+            navbarPageInfoModels.add(map);
         }
-        properties.put("pageIds",navbarPageInfoModels);
+        properties.put(VALID_PAGE_IDS,navbarPageInfoModels);
+        properties.put(VALID_STYLE_TEXT_COLOR,"#000000");
+        properties.put(VALID_STYLE_TEXT_HOVER_COLOR,"#666666");
+        properties.put(VALID_LOGO_FILE_URI,"http://placehold.it/106x82?text=logo");
         return properties;
     }
 
