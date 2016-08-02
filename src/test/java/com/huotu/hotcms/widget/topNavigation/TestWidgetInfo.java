@@ -65,7 +65,6 @@ public class TestWidgetInfo extends WidgetTest {
 
     @Override
     protected void browseWork(Widget widget, WidgetStyle style, Function<ComponentProperties, WebElement> uiChanger) {
-        ComponentProperties componentProperties = new ComponentProperties();
         ComponentProperties properties = new ComponentProperties();
         PageInfo pageInfo1 = new PageInfo();
         pageInfo1.setTitle("首页");
@@ -121,8 +120,7 @@ public class TestWidgetInfo extends WidgetTest {
         properties.put(WidgetInfo.VALID_STYLE_TEXT_HOVER_COLOR, "#111111");
         properties.put(WidgetInfo.VALID_LOGO_FILE_URI, "http://placehold.it/106x82?text=logo");
         properties.put(WidgetInfo.VALID_PAGE_IDS, navbarPageInfoModels);
-        componentProperties.put("properties", properties);
-        WebElement webElement = uiChanger.apply(componentProperties);
+        WebElement webElement = uiChanger.apply(properties);
         List<WebElement> tonavs = webElement.findElements(By.className("topNavigation"));
         assertThat(tonavs.get(0).getText()).isEqualToIgnoringCase("首页");
 
