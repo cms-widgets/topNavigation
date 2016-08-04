@@ -1,38 +1,34 @@
-<!--预览视图-->
-<div id="topNavigation" xmlns:cms="http://cms.huobanplus.com" xmlns:th="http://www.thymeleaf.org" >
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navList">
-                    <span class="sr-only">切换导航</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="index.html"><img class="logo" th:src="${properties['logoFileUri']}"></a>
-            </div>
-            <div class="navbar-collapse collapse navbar-right" id="navList">
-                <ul class="nav navbar-nav">
-                    <li th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}"
-                        th:each="oneItem,ontItemStat: ${properties['pageIds']}" th:if="${oneItem.parentId==0}">
-
-                        <a class="topNavigation" th:text="${oneItem.text}"
-                           th:href="@{/_web/}+${oneItem.href}"
-                           href="javascript:;" data-hover="dropdown" role="button"
-                           aria-haspopup="true" aria-expanded="false">首页</a>
-
-                        <!-- todo 空ul过滤-->
-                        <ul class="dropdown-menu">
-                            <li th:each="twoItem: ${properties['pageIds']}" th:if="${oneItem.pageId==twoItem.parentId}">
-                                <a class="topNavigation" th:text="${twoItem.text}"
-                                   th:href="@{/_web/}+${twoItem.href}"
-                                   href="mall.html">伙伴商城</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-default" id="topNavigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navList">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index.html"><img class="logo" th:src="${properties['logoFileUri']}"></a>
         </div>
-    </nav>
-</div>
-<!--/预览视图-->
+        <div class="navbar-collapse collapse navbar-right" id="navList">
+            <ul class="nav navbar-nav">
+                <li th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}"
+                    th:each="oneItem,ontItemStat: ${properties['pageIds']}" th:if="${oneItem.parentId==0}">
+
+                    <a class="topNavigation" th:text="${oneItem.text}"
+                       th:href="@{/_web/}+${oneItem.href}"
+                       href="javascript:;" data-hover="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">首页</a>
+
+                    <!-- todo 空ul过滤-->
+                    <ul class="dropdown-menu">
+                        <li th:each="twoItem: ${properties['pageIds']}" th:if="${oneItem.pageId==twoItem.parentId}">
+                            <a class="topNavigation" th:text="${twoItem.text}"
+                               th:href="@{/_web/}+${twoItem.href}"
+                               href="mall.html">伙伴商城</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

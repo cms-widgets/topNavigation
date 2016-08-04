@@ -1,45 +1,36 @@
-<div style="display:block;" xmlns:th="http://www.thymeleaf.org">
-
-    <!--编辑视图-->
-
-    <div>
-        <h3>
-            <i class="icon-puzzle"></i><b></b>设置组件参数
-        </h3>
-        <div class="wordBannerBox borderBoxs">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label for="pagingTColor" class="col-md-3 control-label">文字颜色</label>
-
-                    <div class="col-md-3">
-                        <input type="color" class="form-control navPagingTColor" id="pagingTColor">
-                    </div>
-                    <label for="navHoverBColor" class="col-md-3 control-label ">选中颜色</label>
-
-                    <div class="col-md-3">
-                        <input type="color" class="form-control navPagingHColor" id="navHoverBColor">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="logoFile" class="col-md-3 control-label">上传logo</label>
-
-                    <div class="col-md-9">
-                        <div id="logoFile"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span class="col-sm-3">导航显示</span>
-
-                    <div class="col-sm-12 scrollDiv">
-                        <div id="navbar-treeview" class="treeview">
-
-                        </div>
-                    </div>
-                </div>
-            </form>
+<div class="borderBoxs">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="pagingTColor" class="col-md-3 control-label">文字颜色</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control color-picker navPagingTColor" id="pagingTColor">
+            </div>
+            <label for="navHoverBColor" class="col-md-3 control-label ">选中颜色</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control color-picker navPagingHColor" id="navHoverBColor">
+            </div>
         </div>
-    </div>
-    <!--/编辑视图-->
+        <div class="form-group">
+            <label class="col-md-3 control-label">上传logo</label>
+            <div class="col-md-9 oneImage">
+                <div id="logoFile"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">数据源</label>
+            <select name="data-source" class="form-control select-list fl">
+                <option value="1">产品图片</option>
+                <option value="2">新闻图片</option>
+                <option value="3">工具图片</option>
+                <option value="4">XX图片</option>
+                <option value="5">测试图片</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-3">导航显示</span>
+            <div class="col-sm-12 scrollDiv">
+                <div id="navbar-treeview" class="treeview"></div>
+            </div>
+        </div>
+    </form>
 </div>
-
-
