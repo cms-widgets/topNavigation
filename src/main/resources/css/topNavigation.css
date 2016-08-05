@@ -1,7 +1,7 @@
-#[[${componentId}]].topNavigation{
-    color:[[${properties['pagingTColor']}]];
+/*[[${'#'+componentId}]]*/.topNavigation{
+    color:/*[[${properties['pagingTColor']}]]*/ transparent;
 }
 
-#[[${componentId}]].topNavigation:hover{
-    color:[[${properties['pagingHColor']}]];
+/*[[${'#'+componentId}]]*/.topNavigation:hover{
+    color:/*[[${properties['pagingHColor']}]]*/ slategrey;
 }
