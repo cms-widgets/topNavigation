@@ -29,11 +29,10 @@ CMSWidgets.initWidget({
                 isCongruent: false,
                 maxFileCount: 1,
                 successCallback: function (files, data, xhr, pd) {
-                    this.properties.logoFileUri = data.fileUri;
+                    editor.properties.logoFileUri = data.fileUri;
                 },
                 deleteCallback: function (resp, data, jqXHR) {
-                    console.log(data);
-                    this.properties.logoFileUri = "";
+                    editor.properties.logoFileUri = "";
                 }
             });
         },

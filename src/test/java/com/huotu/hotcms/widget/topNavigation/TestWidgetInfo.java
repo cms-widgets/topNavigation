@@ -51,7 +51,7 @@ public class TestWidgetInfo extends WidgetTest {
         assertThat(lis.size()).isEqualTo(3);
 
         WebElement logoDiv = editor.findElement(By.id("logoFile"));
-        List<WebElement> input = logoDiv.findElements(By.name("file"));
+        List<WebElement> input = logoDiv.findElements(By.tagName("input"));
         assertThat(input).isNotNull();
         assertThat(input.size()).as("图片上传插件").isNotEqualTo(0);
 
