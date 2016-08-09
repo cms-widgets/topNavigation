@@ -43,12 +43,11 @@ public class TestWidgetInfo extends WidgetTest {
         } catch (IllegalStateException ignored) {
             assertThat(0).as("save没有属性值，返回异常").isEqualTo(0);
         }
-        WebElement treeview = editor.findElement(By.id("navbar-treeview"));
-        List<WebElement> ul = treeview.findElements(By.tagName("ul"));
-        assertThat(ul).isNotNull();
-        List<WebElement> lis = ul.get(0).findElements(By.tagName("li"));
+        WebElement treeview = editor.findElement(By.id("treeView"));
+
+        List<WebElement> lis = treeview.findElements(By.tagName("li"));
         assertThat(lis.size()).isNotEqualTo(0);
-        assertThat(lis.size()).isEqualTo(3);
+        assertThat(lis.size()).isEqualTo(6);
 
         WebElement logoDiv = editor.findElement(By.id("logoFile"));
         List<WebElement> input = logoDiv.findElements(By.tagName("input"));
@@ -110,10 +109,10 @@ public class TestWidgetInfo extends WidgetTest {
         List<Map<String, Object>> navbarPageInfoModels = new ArrayList<>();
         for (PageInfo pageInfo : list) {
             Map<String, Object> map = new HashMap<>();
-            map.put("text", pageInfo.getTitle());
-            map.put("href", pageInfo.getPagePath());
-            map.put("pageId", pageInfo.getPageId());
-            map.put("parentId", pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
+            map.put("name",pageInfo.getTitle());
+            map.put("pagePath",pageInfo.getPagePath());
+            map.put("id",pageInfo.getPageId());
+            map.put("pid",pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
             navbarPageInfoModels.add(map);
         }
         properties.put(WidgetInfo.VALID_STYLE_TEXT_COLOR, "#eeeeee");

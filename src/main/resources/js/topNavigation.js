@@ -5,11 +5,12 @@ CMSWidgets.initWidget({
     editor: {
         properties: null,
         saveComponent: function (onSuccess, onFailed) {
+            var that = this;
             $.each($(".navPagingTColor"), function (index, obj) {
-                topNavigation.properties.pagingTColor = $(obj).val();
+                that.properties.pagingTColor = $(obj).val();
             });
             $.each($(".navPagingHColor"), function (index, obj) {
-                topNavigation.properties.pagingHColor = $(obj).val();
+                that.properties.pagingHColor = $(obj).val();
             });
             if (this.properties.pagingTColor != '' && this.properties.pagingHColor != ''
                 && this.properties.logoFileUri != '' && this.properties.pageIds.length > 0) {
@@ -21,6 +22,7 @@ CMSWidgets.initWidget({
             }
         },
         uploadImage: function () {
+            var that = this;
             uploadForm({
                 ui: '#logoFile',
                 inputName: 'file',
@@ -29,10 +31,10 @@ CMSWidgets.initWidget({
                 isCongruent: false,
                 maxFileCount: 1,
                 successCallback: function (files, data, xhr, pd) {
-                    editor.properties.logoFileUri = data.fileUri;
+                    that.properties.logoFileUri = data.fileUri;
                 },
                 deleteCallback: function (resp, data, jqXHR) {
-                    editor.properties.logoFileUri = "";
+                    that.properties.logoFileUri = "";
                 }
             });
         },
@@ -41,33 +43,40 @@ CMSWidgets.initWidget({
             this.properties.pagingTColor = "";
             this.properties.pagingHColor = "";
             this.properties.logoFileUri = "";
-            /*<![CDATA[*/
-            var data = /*[[${@cmsDataSourceService.findSitePage()}]]*/ 'Sebastian';
-            /*]]>*/
-            var $checkableTree = $('#navbar-treeview').treeview({
-                levels: 1,
-                data: data,
-                showIcon: false,
-                showCheckbox: true,
-                onNodeChecked: function (event, node) {
-                    var item = {
-                        pageId: node.pageId,
-                        parentId: node.parentId,
-                        text: node.text,
-                        href: node.href,
-                        nodes: []
-                    }
-                    this.properties.pageIds.push(item)
+            var that = this;
+            var setting = {
+                check: {
+                    enable: true
                 },
-                onNodeUnchecked: function (event, node) {
-                    $.grep(this.properties.pageIds, function (cur, index) {
-                        if (cur.pageId == node.pageId && cur.parentId == node.parentId && cur.text == node.text
-                            && cur.href == node.href) {
-                            this.properties.pageIds.splice(index, 1);
-                        }
-                    });
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                callback:{
+                    onCheck:onCheck
                 }
-            });
+            };
+            function onCheck(e,treeId,treeNode){
+                that.properties.pageIds = [];
+                var treeObj=$.fn.zTree.getZTreeObj("treeView");
+                var nodes=treeObj.getCheckedNodes(true);
+                for(var i=0;i<nodes.length;i++){
+                    var item = {
+                        id: nodes[i].id,
+                        pid: nodes[i].pid,
+                        name: nodes[i].name,
+                        pagePath: nodes[i].pagePath
+                    }
+                    that.properties.pageIds.push(item)
+                }
+            }
+
+            /*<![CDATA[*/
+            var data = /*[[${@cmsDataSourceService.findSitePage()}]]*/ '[]';
+            /*]]>*/
+
+            $.fn.zTree.init($("#treeView"), setting, jQuery.parseJSON(data));
         },
         open: function (globalId) {
             this.properties = widgetProperties(globalId);

@@ -9,22 +9,19 @@
 
 package com.huotu.hotcms.widget.topNavigation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import com.huotu.hotcms.service.model.NavbarPageInfoModel;
 import com.huotu.hotcms.widget.ComponentProperties;
 import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
 import com.huotu.hotcms.widget.entity.PageInfo;
 import me.jiangcai.lib.resource.service.ResourceService;
-import org.apache.http.entity.ContentType;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -184,10 +181,10 @@ public class WidgetInfo implements Widget{
         List<Map<String,Object>> navbarPageInfoModels = new ArrayList<>();
         for (PageInfo pageInfo : list) {
             Map<String,Object> map = new HashMap<>();
-            map.put("text",pageInfo.getTitle());
-            map.put("href",pageInfo.getPagePath());
-            map.put("pageId",pageInfo.getPageId());
-            map.put("parentId",pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
+            map.put("name",pageInfo.getTitle());
+            map.put("pagePath",pageInfo.getPagePath());
+            map.put("id",pageInfo.getPageId());
+            map.put("pid",pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
             navbarPageInfoModels.add(map);
         }
         properties.put(VALID_PAGE_IDS,navbarPageInfoModels);
