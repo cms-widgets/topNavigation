@@ -18,11 +18,11 @@ CMSWidgets.initWidget({
                 return this.properties;
             } else {
                 onFailed("组件参数缺少,未能保存,请完善。");
-                return ;
+                return true;
             }
         },
         uploadImage: function () {
-            var that = this;
+            var me = this;
             uploadForm({
                 ui: '#logoFile',
                 inputName: 'file',
@@ -31,10 +31,10 @@ CMSWidgets.initWidget({
                 isCongruent: false,
                 maxFileCount: 1,
                 successCallback: function (files, data, xhr, pd) {
-                    that.properties.logoFileUri = data.fileUri;
+                    me.properties.logoFileUri = data.fileUri;
                 },
                 deleteCallback: function (resp, data, jqXHR) {
-                    that.properties.logoFileUri = "";
+                    me.properties.logoFileUri = "";
                 }
             });
         },
@@ -67,7 +67,7 @@ CMSWidgets.initWidget({
                         pid: nodes[i].pid,
                         name: nodes[i].name,
                         pagePath: nodes[i].pagePath
-                    }
+                    };
                     that.properties.pageIds.push(item)
                 }
             }
@@ -84,7 +84,7 @@ CMSWidgets.initWidget({
             this.uploadImage();
         },
         close:function (globalId) {
-            
+            $('#logoFile').siblings().remove();
         }
     }
 })
