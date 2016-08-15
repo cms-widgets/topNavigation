@@ -6,12 +6,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="index.html"><img class="logo" th:src="${properties['logoFileUri']}"></a>
+            <a href=""><img class="logo" th:src="${logoFileUri}"></a>
         </div>
         <div class="navbar-collapse collapse navbar-right" id="navList">
             <ul class="nav navbar-nav">
                 <li th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}"
-                    th:each="oneItem,ontItemStat: ${properties['pageIds']}" th:if="${oneItem.pid==0}">
+                    th:each="oneItem,ontItemStat: ${pageIds}" th:if="${oneItem.pid==0}">
 
                     <a class="topNavigation" th:text="${oneItem.name}"
                        th:href="@{/_web/}+${oneItem.pagePath}"
@@ -19,7 +19,7 @@
                        aria-haspopup="true" aria-expanded="false">首页</a>
 
                     <ul class="dropdown-menu">
-                        <li th:each="twoItem: ${properties['pageIds']}" th:if="${oneItem.id==twoItem.pid}">
+                        <li th:each="twoItem: ${pageIds}" th:if="${oneItem.id==twoItem.pid}">
                             <a class="topNavigation" th:text="${twoItem.name}"
                                th:href="@{/_web/}+${twoItem.pagePath}"
                                href="mall.html">伙伴商城</a>

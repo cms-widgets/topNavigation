@@ -100,19 +100,7 @@ public class WidgetInfo implements Widget{
 
     @Override
     public void valid(String styleId, ComponentProperties componentProperties) throws IllegalArgumentException {
-        WidgetStyle[] widgetStyles = styles();
-        boolean flag = false;
-        if (widgetStyles == null || widgetStyles.length < 1) {
-            throw new IllegalArgumentException();
-        }
-        for (WidgetStyle ws : widgetStyles) {
-            if ((flag = ws.id().equals(styleId))) {
-                break;
-            }
-        }
-        if (!flag) {
-            throw new IllegalArgumentException();
-        }
+        WidgetStyle style = WidgetStyle.styleByID(this,styleId);
         //加入控件独有的属性验证
         String textColor = (String) componentProperties.get(VALID_STYLE_TEXT_COLOR);
         String hoverColor = (String) componentProperties.get(VALID_STYLE_TEXT_HOVER_COLOR);
