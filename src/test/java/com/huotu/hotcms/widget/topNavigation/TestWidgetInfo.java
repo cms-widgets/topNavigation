@@ -39,7 +39,7 @@ public class TestWidgetInfo extends WidgetTest {
         WebElement treeview = editor.findElement(By.id("treeView"));
         List<WebElement> lis = treeview.findElements(By.tagName("li"));
         assertThat(lis.size()).isNotEqualTo(0);
-        assertThat(lis.size()).isEqualTo(6);
+        assertThat(lis.size()).isEqualTo(3);
         WebElement logoDiv = editor.findElement(By.id("logoFile"));
         List<WebElement> input = logoDiv.findElements(By.tagName("input"));
         assertThat(input).isNotNull();
@@ -52,6 +52,10 @@ public class TestWidgetInfo extends WidgetTest {
                     .isEqualTo(widget.defaultProperties(resourceService).get(WidgetInfo.VALID_STYLE_TEXT_COLOR));
             assertThat(map.get(WidgetInfo.VALID_STYLE_TEXT_HOVER_COLOR))
                     .isEqualTo(widget.defaultProperties(resourceService).get(WidgetInfo.VALID_STYLE_TEXT_HOVER_COLOR));
+            map = currentWidgetProperties.get();
+            ComponentProperties properties = new ComponentProperties();
+            properties.putAll(map);
+            widget.valid(widget.styles()[0].id(),properties);
         } catch (IllegalStateException ignored) {
             assertThat(0).as("save没有属性值，返回异常").isEqualTo(0);
         } catch (IOException e) {

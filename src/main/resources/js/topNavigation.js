@@ -6,12 +6,14 @@ CMSWidgets.initWidget({
         properties: null,
         saveComponent: function (onSuccess, onFailed) {
             var that = this;
-            $.each($(".navPagingTColor"), function (index, obj) {
-                that.properties.pagingTColor = $(obj).val();
-            });
-            $.each($(".navPagingHColor"), function (index, obj) {
-                that.properties.pagingHColor = $(obj).val();
-            });
+            that.properties.pagingTColor = $("input[name='pagingTColor']").val();
+            that.properties.pagingHColor = $("input[name='pagingHColor']").val();
+            var treeObj = $.fn.zTree.getZTreeObj("treeView");
+            var nodes = treeObj.transformTozTreeNodes(treeObj.getNodes());
+            that.properties.pageIds=nodes;
+            if (this.properties.logoFileUri==undefined){
+                this.properties.logoFileUri=$(".logoImg").attr("src");
+            }
             if (this.properties.pagingTColor != '' && this.properties.pagingHColor != ''
                 && this.properties.logoFileUri != '' && this.properties.pageIds.length > 0) {
                 onSuccess(this.properties)
@@ -39,44 +41,59 @@ CMSWidgets.initWidget({
             });
         },
         initProperties: function () {
-            this.properties.pageIds = [];
-            this.properties.pagingTColor = "";
-            this.properties.pagingHColor = "";
-            this.properties.logoFileUri = "";
-            var that = this;
+            if(this.properties.pageIds==undefined || this.properties.pageIds.length==0){
+                this.properties.pageIds = [
+                                            {id:1,name:'1',pagePath:'/'}
+                                            ,{id:2,name:'2',pagePath:'/'}
+                                            ,{id:3,name:'3',pagePath:'/'}
+                                         ];
+            }
+            var treeNode = null;
             var setting = {
-                check: {
-                    enable: true
-                },
                 data: {
                     simpleData: {
                         enable: true
                     }
                 },
-                callback:{
-                    onCheck:onCheck
+                callback: {
+                    onClick: onClick
                 }
             };
-            function onCheck(e,treeId,treeNode){
-                that.properties.pageIds = [];
-                var treeObj=$.fn.zTree.getZTreeObj("treeView");
-                var nodes=treeObj.getCheckedNodes(true);
-                for(var i=0;i<nodes.length;i++){
-                    var item = {
-                        id: nodes[i].id,
-                        pid: nodes[i].pid,
-                        name: nodes[i].name,
-                        pagePath: nodes[i].pagePath
-                    };
-                    that.properties.pageIds.push(item)
+
+            function onClick(event, treeId, treenode) {
+                treeNode = treenode;
+                $("input[name='name'] ").val(treenode.name);
+                $("input[name='pagePath'] ").val(treenode.pagePath);
+            };
+
+            $.fn.zTree.init($("#treeView"), setting, this.properties.pageIds);
+
+            $(".form-horizontal").on("click", ".addRootNodes", function () {
+                var rootNode = {name: "rootNode1", uri: ''};
+                $.fn.zTree.getZTreeObj("treeView").addNodes(null, rootNode);
+            });
+            $(".form-horizontal").on("click", ".addNodes", function () {
+                if (treeNode.level>=1){
+                    return ;
                 }
-            }
+                var childNode = {name: "childNode", uri: '',pid:treeNode.pid};
+                $.fn.zTree.getZTreeObj("treeView").addNodes(treeNode, childNode);
+            });
 
-            /*<![CDATA[*/
-            var data = /*[[${@cmsDataSourceService.findSitePage()}]]*/ '[]';
-            /*]]>*/
+            $(".form-horizontal").on("click", ".delNodes", function () {
+                $.fn.zTree.getZTreeObj("treeView").removeNode(treeNode);
+                treeNode = null;
+            });
 
-            $.fn.zTree.init($("#treeView"), setting, jQuery.parseJSON(data));
+            $(".form-horizontal").on("click", ".reset", function () {
+                $.fn.zTree.init($("#treeView"), setting, '');
+                treeNode = null;
+            });
+            $(".form-horizontal").on("click", ".saveNode", function () {
+                treeNode.name = $("input[name='name'] ").val();
+                treeNode.pagePath = $("input[name='pagePath'] ").val();
+                $.fn.zTree.getZTreeObj("treeView").updateNode(treeNode);
+            });
         },
         open: function (globalId) {
             this.properties = widgetProperties(globalId);
@@ -85,6 +102,11 @@ CMSWidgets.initWidget({
         },
         close:function (globalId) {
             $('#logoFile').siblings().remove();
+            $(".form-horizontal").off("click", ".addRootNodes");
+            $(".form-horizontal").off("click", ".saveNode");
+            $(".form-horizontal").off("click", ".reset");
+            $(".form-horizontal").off("click", ".delNodes");
+            $(".form-horizontal").off("click", ".addNodes");
         }
     }
 })

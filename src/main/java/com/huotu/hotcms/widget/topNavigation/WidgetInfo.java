@@ -12,8 +12,8 @@ package com.huotu.hotcms.widget.topNavigation;
 import com.huotu.hotcms.widget.ComponentProperties;
 import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
-import com.huotu.hotcms.widget.entity.PageInfo;
 import me.jiangcai.lib.resource.service.ResourceService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -73,7 +73,7 @@ public class WidgetInfo implements Widget{
 
     @Override
     public WidgetStyle[] styles() {
-        return new WidgetStyle[]{new DefaultWidgetStyle()};
+        return new WidgetStyle[]{new DefaultWidgetStyle(),new CenterWidgetStyle()};
     }
 
 
@@ -126,55 +126,43 @@ public class WidgetInfo implements Widget{
         properties.put("pagingTColor","#000000");
         properties.put("pagingHColor","#000000");
         properties.put("logoFileUri","http://placehold.it/106x82?text=Logo");
-        PageInfo pageInfo1 = new PageInfo();
-        pageInfo1.setTitle("首页");
-        pageInfo1.setPagePath("");
-        pageInfo1.setPageId(1L);
+        Map<String,Object> map1 = new HashedMap();
+        map1.put("name","首页");
+        map1.put("pagePath","");
+        map1.put("isParent","false");
+        map1.put("id",1);
 
-        PageInfo pageInfo2 = new PageInfo();
-        pageInfo2.setTitle("新闻");
-        pageInfo2.setPagePath("xw");
-        pageInfo2.setPageId(2L);
+        Map<String,Object> map2 = new HashedMap();
+        List<Map<String,Object>> children = new ArrayList<>();
+        Map<String,Object> map21 = new HashedMap();
+        map21.put("name","公司动态");
+        map21.put("pagePath","");
+        map21.put("pid",2);
 
-        PageInfo gjxw = new PageInfo();
-        gjxw.setTitle("国际新闻");
-        gjxw.setPagePath("gjxw");
-        gjxw.setPageId(22L);
-        gjxw.setParent(pageInfo2);
+        Map<String,Object> map22 = new HashedMap();
+        map22.put("name","行业动态");
+        map22.put("pagePath","");
+        map22.put("pid",2);
+        children.add(map21);
+        children.add(map22);
 
-        PageInfo gnxw = new PageInfo();
-        gnxw.setTitle("国内新闻");
-        gnxw.setParent(pageInfo2);
-        gnxw.setPageId(23L);
-        gnxw.setPagePath("gnxw");
+        map2.put("name","动态资讯");
+        map2.put("pagePath","");
+        map2.put("isParent","true");
+        map2.put("children",children);
+        map2.put("id",2);
 
-        PageInfo zjxw = new PageInfo();
-        zjxw.setTitle("浙江新闻");
-        zjxw.setParent(gnxw);
-        zjxw.setPageId(231L);
-        zjxw.setPagePath("zjxw");
+        Map<String,Object> map3 = new HashedMap();
+        map3.put("name","关于我们");
+        map3.put("pagePath","");
+        map3.put("isParent","false");
+        map3.put("id",3);
 
-        PageInfo pageInfo3 = new PageInfo();
-        pageInfo3.setTitle("关于我们");
-        pageInfo3.setPagePath("guwm");
-        pageInfo3.setPageId(3L);
-
-        List<PageInfo> list = new ArrayList<>();
-        list.add(pageInfo1);
-        list.add(gjxw);
-        list.add(pageInfo2);
-        list.add(pageInfo3);
-        list.add(gnxw);
-        list.add(zjxw);
         List<Map<String,Object>> navbarPageInfoModels = new ArrayList<>();
-        for (PageInfo pageInfo : list) {
-            Map<String,Object> map = new HashMap<>();
-            map.put("name",pageInfo.getTitle());
-            map.put("pagePath",pageInfo.getPagePath());
-            map.put("id",pageInfo.getPageId());
-            map.put("pid",pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
-            navbarPageInfoModels.add(map);
-        }
+        navbarPageInfoModels.add(map1);
+        navbarPageInfoModels.add(map2);
+        navbarPageInfoModels.add(map3);
+
         properties.put(VALID_PAGE_IDS,navbarPageInfoModels);
         properties.put(VALID_STYLE_TEXT_COLOR,"#000000");
         properties.put(VALID_STYLE_TEXT_HOVER_COLOR,"#666666");

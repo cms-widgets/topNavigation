@@ -9,24 +9,24 @@
             <a href=""><img class="logo" th:src="${logoFileUri}"></a>
         </div>
         <div class="navbar-collapse collapse navbar-right" id="navList">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" th:if="${pageIds.size()}>0">
                 <li th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}"
-                    th:each="oneItem,ontItemStat: ${pageIds}" th:if="${oneItem.pid==0}">
+                    th:each="oneItem,ontItemStat: ${pageIds}">
 
-                    <a class="topNavigation" th:text="${oneItem.name}"
-                       th:href="@{/_web/}+${oneItem.pagePath}"
+                    <a class="topNavigation" th:text="${oneItem['name']}"
+                       th:href="@{/_web/}+${oneItem['pagePath']}"
                        href="javascript:;" data-hover="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false">首页</a>
 
-                    <ul class="dropdown-menu">
-                        <li th:each="twoItem: ${pageIds}" th:if="${oneItem.id==twoItem.pid}">
-                            <a class="topNavigation" th:text="${twoItem.name}"
-                               th:href="@{/_web/}+${twoItem.pagePath}"
+                    <ul class="dropdown-menu" th:if="${oneItem['isParent']}" >
+                        <li th:each="twoItem: ${oneItem['children']}" >
+                            <a class="topNavigation" th:text="${twoItem['name']}"
+                               th:href="@{/_web/}+${twoItem['pagePath']}"
                                href="mall.html">伙伴商城</a>
                         </li>
                     </ul>
                 </li>
-                </li>
             </ul>
         </div>
 </div>
+
