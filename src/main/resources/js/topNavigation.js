@@ -10,45 +10,24 @@ CMSWidgets.initWidget({
             that.properties.pagingHColor = $("input[name='pagingHColor']").val();
             var treeObj = $.fn.zTree.getZTreeObj("treeView");
             var nodes = treeObj.transformTozTreeNodes(treeObj.getNodes());
-            that.properties.pageIds=nodes;
-            if (this.properties.logoFileUri==undefined){
-                this.properties.logoFileUri=$(".logoImg").attr("src");
-            }
-            if (this.properties.pagingTColor != '' && this.properties.pagingHColor != ''
-                && this.properties.logoFileUri != '' && this.properties.pageIds.length > 0) {
-                onSuccess(this.properties)
-                return this.properties;
+            that.properties.pageIds = nodes;
+            if (that.properties.pagingTColor != '' && that.properties.pagingHColor != '' && that.properties.pageIds.length > 0) {
+                onSuccess(that.properties)
+                return that.properties;
             } else {
                 onFailed("组件参数缺少,未能保存,请完善。");
                 return true;
             }
         },
-        uploadImage: function () {
-            var me = this;
-            uploadForm({
-                ui: '#logoFile',
-                inputName: 'file',
-                maxWidth: 1920,
-                maxHeight: 540,
-                isCongruent: false,
-                maxFileCount: 1,
-                successCallback: function (files, data, xhr, pd) {
-                    me.properties.logoFileUri = data.fileUri;
-                },
-                deleteCallback: function (resp, data, jqXHR) {
-                    me.properties.logoFileUri = "";
-                }
-            });
-        },
         initProperties: function () {
+            var treeNode = null;
             if(this.properties.pageIds==undefined || this.properties.pageIds.length==0){
                 this.properties.pageIds = [
-                                            {id:1,name:'1',pagePath:'/'}
-                                            ,{id:2,name:'2',pagePath:'/'}
-                                            ,{id:3,name:'3',pagePath:'/'}
-                                         ];
+                    {id:1,name:'1',pagePath:'/'}
+                    ,{id:2,name:'2',pagePath:'/'}
+                    ,{id:3,name:'3',pagePath:'/'}
+                ];
             }
-            var treeNode = null;
             var setting = {
                 data: {
                     simpleData: {
@@ -73,10 +52,10 @@ CMSWidgets.initWidget({
                 $.fn.zTree.getZTreeObj("treeView").addNodes(null, rootNode);
             });
             $(".form-horizontal").on("click", ".addNodes", function () {
-                if (treeNode.level>=1){
-                    return ;
+                if (treeNode.level >= 1) {
+                    return;
                 }
-                var childNode = {name: "childNode", uri: '',pid:treeNode.pid};
+                var childNode = {name: "childNode", uri: '', pid: treeNode.pid};
                 $.fn.zTree.getZTreeObj("treeView").addNodes(treeNode, childNode);
             });
 
@@ -98,10 +77,8 @@ CMSWidgets.initWidget({
         open: function (globalId) {
             this.properties = widgetProperties(globalId);
             this.initProperties();
-            this.uploadImage();
         },
-        close:function (globalId) {
-            $('#logoFile').siblings().remove();
+        close: function (globalId) {
             $(".form-horizontal").off("click", ".addRootNodes");
             $(".form-horizontal").off("click", ".saveNode");
             $(".form-horizontal").off("click", ".reset");

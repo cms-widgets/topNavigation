@@ -7,16 +7,8 @@
             </div>
             <label class="col-md-3 control-label ">选中颜色</label>
             <div class="col-md-3">
-                <input type="text" name="pagingHColor" th:value="${pagingHColor}" class="form-control color-picker " >
+                <input type="text" name="pagingHColor" th:value="${pagingHColor}" class="form-control color-picker ">
             </div>
-        </div>
-        <!-- TODO 上传图片功能 编辑视图应当只提供上传按钮，和显示上传后的图片-->
-        <div class="form-group">
-            <label class="col-md-3 control-label">上传logo</label>
-            <div class="col-md-9 oneImage">
-                <div id="logoFile"></div>
-            </div>
-            <img th:src="${logoFileUri}" class="logoImg"/>
         </div>
         <div class="row">
             <div class="col-sm-5">
@@ -30,17 +22,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4">
-                <button type="button" class="form-control addRootNodes" >一级节点</button>
+            <div class="col-sm-3">
+                <button type="button" class="form-control addRootNodes">一级节点</button>
             </div>
-            <div class="col-sm-4">
-                <button type="button" class="form-control addNodes" >子级节点</button>
+            <div class="col-sm-3">
+                <button type="button" class="form-control addNodes">子级节点</button>
             </div>
-            <div class="col-sm-4">
-                <button type="button" class="form-control delNodes" >删除</button>
+            <div class="col-sm-3">
+                <button type="button" class="form-control delNodes">删除</button>
             </div>
-            <div class="col-sm-4">
-                <button type="button" class="form-control reset" >重做</button>
+            <div class="col-sm-3">
+                <button type="button" class="form-control reset">重做</button>
             </div>
         </div>
         <div class="form-group">

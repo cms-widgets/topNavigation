@@ -1,6 +1,6 @@
-<div class="navBar">
+<div xmlns:res="http://resource.jiangcai.me" class="navBar">
     <ul class="nav clearfix">
-        <img src="images/logo.png" class="logoimg" th:src="${logoFileUri}">
+        <a href=""><img class="logoimg" res:src="${site.logoUri}"/></a>
         <li  class="m dropdown" th:each="oneItem,ontItemStat: ${pageIds}">
             <h3>
                 <a class="topNavigation" th:text="${oneItem['name']}"

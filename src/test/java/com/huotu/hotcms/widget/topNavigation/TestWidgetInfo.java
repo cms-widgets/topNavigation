@@ -40,10 +40,7 @@ public class TestWidgetInfo extends WidgetTest {
         List<WebElement> lis = treeview.findElements(By.tagName("li"));
         assertThat(lis.size()).isNotEqualTo(0);
         assertThat(lis.size()).isEqualTo(3);
-        WebElement logoDiv = editor.findElement(By.id("logoFile"));
-        List<WebElement> input = logoDiv.findElements(By.tagName("input"));
-        assertThat(input).isNotNull();
-        assertThat(input.size()).as("图片上传插件").isNotEqualTo(0);
+
         try {
             Map map = currentWidgetProperties.get();
             assertThat(map.containsKey(WidgetInfo.VALID_STYLE_TEXT_COLOR)).isTrue();

@@ -32,12 +32,6 @@ public class WidgetInfo implements Widget{
     public static final String VALID_STYLE_TEXT_COLOR = "pagingTColor";
     public static final String VALID_STYLE_TEXT_HOVER_COLOR = "pagingHColor";
     public static final String VALID_PAGE_IDS = "pageIds";
-    public static final String VALID_LOGO_FILE_URI = "logoFileUri";
-
-    /*
-     * 指定风格的模板类型 如：html,text等
-     */
-    public static final String VALID_STYLE_TEMPLATE = "styleTemplate";
 
     @Override
     public String groupId() {
@@ -48,7 +42,6 @@ public class WidgetInfo implements Widget{
     public String widgetId() {
         return "topNavigation";
     }
-
 
     @Override
     public String name(Locale locale) {
@@ -104,11 +97,9 @@ public class WidgetInfo implements Widget{
         //加入控件独有的属性验证
         String textColor = (String) componentProperties.get(VALID_STYLE_TEXT_COLOR);
         String hoverColor = (String) componentProperties.get(VALID_STYLE_TEXT_HOVER_COLOR);
-        String logoFileUri = (String) componentProperties.get(VALID_LOGO_FILE_URI);
         List pageIds = (List) componentProperties.get(VALID_PAGE_IDS);
 
-        if (logoFileUri == null ||textColor == null ||  hoverColor == null || pageIds== null ||logoFileUri.equals("")
-                || textColor.equals("") ||  hoverColor.equals("") || pageIds.size()<=0) {
+        if (textColor == null ||  hoverColor == null || pageIds== null || textColor.equals("") ||  hoverColor.equals("") || pageIds.size()<=0) {
             throw new IllegalArgumentException("控件属性缺少");
         }
 
@@ -125,7 +116,6 @@ public class WidgetInfo implements Widget{
         ComponentProperties properties = new ComponentProperties();
         properties.put("pagingTColor","#000000");
         properties.put("pagingHColor","#000000");
-        properties.put("logoFileUri","http://placehold.it/106x82?text=Logo");
         Map<String,Object> map1 = new HashedMap();
         map1.put("name","首页");
         map1.put("pagePath","");
@@ -166,7 +156,6 @@ public class WidgetInfo implements Widget{
         properties.put(VALID_PAGE_IDS,navbarPageInfoModels);
         properties.put(VALID_STYLE_TEXT_COLOR,"#000000");
         properties.put(VALID_STYLE_TEXT_HOVER_COLOR,"#666666");
-        properties.put(VALID_LOGO_FILE_URI,"http://placehold.it/106x82?text=logo");
         return properties;
     }
 

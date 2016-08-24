@@ -1,4 +1,4 @@
-<div class="navbar navbar-default" >
+<div xmlns:res="http://resource.jiangcai.me" class="navbar navbar-default">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navList">
                 <span class="sr-only">切换导航</span>
@@ -6,10 +6,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href=""><img class="logo" th:src="${logoFileUri}"></a>
+            <a href=""><img class="logo"  res:src="${site.logoUri}"></a>
         </div>
         <div class="navbar-collapse collapse navbar-right" id="navList">
-            <ul class="nav navbar-nav" th:if="${pageIds.size()}>0">
+            <ul class="nav navbar-nav" >
                 <li th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}"
                     th:each="oneItem,ontItemStat: ${pageIds}">
 
