@@ -20,7 +20,8 @@
                        aria-haspopup="true" aria-expanded="false">首页</a>
 
                     <a class="topNavigation" th:if="${oneItem['flag']==1}"  th:text="${oneItem['name']}"
-                       th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(oneItem['linkPath']).pagePath})}"
+                       th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(oneItem['linkPath'])
+                       !=null?@cmsDataSourceService.findPageInfoContent(oneItem['linkPath']).pagePath:''})}"
                        href="javascript:;" data-hover="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false">首页</a>
 
@@ -32,7 +33,8 @@
                                aria-haspopup="true" aria-expanded="false">首页</a>
 
                             <a class="topNavigation" th:if="${twoItem['flag']==1}"  th:text="${twoItem['name']}"
-                               th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(twoItem['linkPath']).pagePath})}"
+                               th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(twoItem['linkPath'])
+                               !=null@cmsDataSourceService.findPageInfoContent(twoItem['linkPath']).pagePath:''})}"
                                href="javascript:;" data-hover="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">首页</a>
                         </li>
