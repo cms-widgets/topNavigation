@@ -66,7 +66,7 @@ public class WidgetInfo implements Widget{
 
     @Override
     public WidgetStyle[] styles() {
-        return new WidgetStyle[]{new DefaultWidgetStyle(),new CenterWidgetStyle()};
+        return new WidgetStyle[]{new CenterWidgetStyle(),new DefaultWidgetStyle()};
     }
 
 
@@ -118,7 +118,8 @@ public class WidgetInfo implements Widget{
         properties.put("pagingHColor","#000000");
         Map<String,Object> map1 = new HashedMap();
         map1.put("name","首页");
-        map1.put("pagePath","");
+        map1.put("linkPath","");
+        map1.put("flag",0);
         map1.put("isParent","false");
         map1.put("id",1);
 
@@ -126,26 +127,30 @@ public class WidgetInfo implements Widget{
         List<Map<String,Object>> children = new ArrayList<>();
         Map<String,Object> map21 = new HashedMap();
         map21.put("name","公司动态");
-        map21.put("pagePath","");
+        map21.put("linkPath","");
+        map21.put("flag",0);
         map21.put("pid",2);
 
         Map<String,Object> map22 = new HashedMap();
         map22.put("name","行业动态");
-        map22.put("pagePath","");
+        map22.put("linkPath","");
+        map22.put("flag",0);
         map22.put("pid",2);
         children.add(map21);
         children.add(map22);
 
         map2.put("name","动态资讯");
-        map2.put("pagePath","");
+        map2.put("linkPath","");
         map2.put("isParent","true");
         map2.put("children",children);
+        map2.put("flag",0);
         map2.put("id",2);
 
         Map<String,Object> map3 = new HashedMap();
         map3.put("name","关于我们");
-        map3.put("pagePath","");
+        map3.put("linkPath","");
         map3.put("isParent","false");
+        map3.put("flag",0);
         map3.put("id",3);
 
         List<Map<String,Object>> navbarPageInfoModels = new ArrayList<>();

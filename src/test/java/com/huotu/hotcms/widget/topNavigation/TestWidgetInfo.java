@@ -36,7 +36,7 @@ public class TestWidgetInfo extends WidgetTest {
 
     @Override
     protected void editorWork(Widget widget, WebElement editor, Supplier<Map<String, Object>> currentWidgetProperties) {
-        WebElement treeview = editor.findElement(By.id("treeView"));
+        WebElement treeview = editor.findElement(By.id("treeView")).findElement(By.className("ztree"));
         List<WebElement> lis = treeview.findElements(By.tagName("li"));
         assertThat(lis.size()).isNotEqualTo(0);
         assertThat(lis.size()).isEqualTo(3);
@@ -49,6 +49,7 @@ public class TestWidgetInfo extends WidgetTest {
                     .isEqualTo(widget.defaultProperties(resourceService).get(WidgetInfo.VALID_STYLE_TEXT_COLOR));
             assertThat(map.get(WidgetInfo.VALID_STYLE_TEXT_HOVER_COLOR))
                     .isEqualTo(widget.defaultProperties(resourceService).get(WidgetInfo.VALID_STYLE_TEXT_HOVER_COLOR));
+
             map = currentWidgetProperties.get();
             ComponentProperties properties = new ComponentProperties();
             properties.putAll(map);

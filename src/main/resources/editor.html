@@ -10,36 +10,8 @@
                 <input type="text" name="pagingHColor" th:value="${pagingHColor}" class="form-control color-picker ">
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="name" placeholder="链接名称"/>
-            </div>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="pagePath" placeholder="链接/或外链"/>
-            </div>
-            <div class="col-sm-2">
-                <button type="button" class="form-control saveNode">保存</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <button type="button" class="form-control addRootNodes">一级节点</button>
-            </div>
-            <div class="col-sm-3">
-                <button type="button" class="form-control addNodes">子级节点</button>
-            </div>
-            <div class="col-sm-3">
-                <button type="button" class="form-control delNodes">删除</button>
-            </div>
-            <div class="col-sm-3">
-                <button type="button" class="form-control reset">重做</button>
-            </div>
-        </div>
-        <div class="form-group">
-            <span class="col-sm-3">导航显示</span>
-            <div class="col-sm-12 scrollDiv">
-                <ul id="treeView" class="ztree"></ul>
-            </div>
+        <div>
+            <div id="treeView"></div>
         </div>
     </form>
 </div>

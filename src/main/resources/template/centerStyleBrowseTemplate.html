@@ -4,14 +4,14 @@
         <li  class="m dropdown" th:each="oneItem,ontItemStat: ${pageIds}">
             <h3>
                 <a class="topNavigation" th:text="${oneItem['name']}"
-                   th:href="@{/_web/}+${oneItem['pagePath']}" href="#" title="资讯动态">
+                   th:href="@{/_web/}+${oneItem['linkPath']}" href="#" title="资讯动态">
                     资讯动态
                 </a>
             </h3>
             <ul class="sub"  th:if="${oneItem['isParent']}">
                 <li th:each="twoItem: ${oneItem['children']}">
                     <a href="#" title="公司动态" th:text="${twoItem['name']}"
-                       th:href="@{/_web/}+${twoItem['pagePath']}">
+                       th:href="@{/_web/}+${twoItem['linkPath']}">
                         公司动态
                     </a>
                 </li>

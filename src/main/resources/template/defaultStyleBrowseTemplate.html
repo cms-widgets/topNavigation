@@ -1,4 +1,5 @@
-<div xmlns:res="http://resource.jiangcai.me" class="navbar navbar-default">
+<div class="topnavbar">
+    <div xmlns:res="http://resource.jiangcai.me" class="navbar navbar-default">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navList">
                 <span class="sr-only">切换导航</span>
@@ -6,27 +7,38 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href=""><img class="logo"  res:src="${site.logoUri}"></a>
+            <a href=""><img class="logo" res:src="${site.logoUri}"></a>
         </div>
         <div class="navbar-collapse collapse navbar-right" id="navList">
-            <ul class="nav navbar-nav" >
-                <li th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}"
-                    th:each="oneItem,ontItemStat: ${pageIds}">
+            <ul class="nav navbar-nav">
+                <li th:each="oneItem,ontItemStat: ${pageIds}"
+                    th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}"  >
 
-                    <a class="topNavigation" th:text="${oneItem['name']}"
-                       th:href="@{/_web/}+${oneItem['pagePath']}"
+                    <a class="topNavigation" th:if="${oneItem['flag']==0}"  th:text="${oneItem['name']}"
+                       th:href="${oneItem['linkPath']}"
                        href="javascript:;" data-hover="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false">首页</a>
 
-                    <ul class="dropdown-menu" th:if="${oneItem['isParent']}" >
-                        <li th:each="twoItem: ${oneItem['children']}" >
-                            <a class="topNavigation" th:text="${twoItem['name']}"
-                               th:href="@{/_web/}+${twoItem['pagePath']}"
-                               href="mall.html">伙伴商城</a>
+                    <a class="topNavigation" th:if="${oneItem['flag']==1}"  th:text="${oneItem['name']}"
+                       th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(oneItem['linkPath']).pagePath})}"
+                       href="javascript:;" data-hover="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">首页</a>
+
+                    <ul class="dropdown-menu" th:if="${oneItem['isParent']}">
+                        <li th:each="twoItem: ${oneItem['children']}">
+                            <a class="topNavigation" th:if="${twoItem['flag']==0}"  th:text="${twoItem['name']}"
+                               th:href="${twoItem['linkPath']}"
+                               href="javascript:;" data-hover="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">首页</a>
+
+                            <a class="topNavigation" th:if="${twoItem['flag']==1}"  th:text="${twoItem['name']}"
+                               th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(twoItem['linkPath']).pagePath})}"
+                               href="javascript:;" data-hover="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">首页</a>
                         </li>
                     </ul>
                 </li>
             </ul>
         </div>
+    </div>
 </div>
-
