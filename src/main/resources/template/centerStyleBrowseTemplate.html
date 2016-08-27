@@ -1,21 +1,33 @@
-<div xmlns:res="http://resource.jiangcai.me" class="navBar">
-    <ul class="nav clearfix">
-        <a href=""><img class="logoimg" res:src="${site.logoUri}"/></a>
-        <li  class="m dropdown" th:each="oneItem,ontItemStat: ${pageIds}">
-            <h3>
-                <a class="topNavigation" th:text="${oneItem['name']}"
-                   th:href="@{/_web/}+${oneItem['pagePath']}" href="#" title="资讯动态">
-                    资讯动态
-                </a>
-            </h3>
-            <ul class="sub"  th:if="${oneItem['isParent']}">
-                <li th:each="twoItem: ${oneItem['children']}">
-                    <a href="#" title="公司动态" th:text="${twoItem['name']}"
-                       th:href="@{/_web/}+${twoItem['pagePath']}">
-                        公司动态
-                    </a>
+<div xmlns:res="http://resource.jiangcai.me" class="topnavbar topnavbar-red width-1000 topnavbar-absolute">
+    <div class="navbar navbar-default">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navList">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/"><img class="logo img-responsive"  res:src="${site.logoUri}"></a>
+        </div>
+        <div class="navbar-collapse collapse" id="navList">
+            <ul class="nav navbar-nav">
+                <li th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}"
+                    th:each="oneItem,ontItemStat: ${pageIds}">
+
+                    <a class="topNavigation" th:text="${oneItem['name']}"
+                       th:href="@{/_web/}+${oneItem['pagePath']}"
+                       href="javascript:;" data-hover="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">首页</a>
+
+                    <ul class="dropdown-menu" th:if="${oneItem['isParent']}" >
+                        <li th:each="twoItem: ${oneItem['children']}" >
+                            <a class="topNavigation" th:text="${twoItem['name']}"
+                               th:href="@{/_web/}+${twoItem['pagePath']}"
+                               href="mall.html">伙伴商城</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
-        </li>
-    </ul>
+        </div>
+    </div>
 </div>
