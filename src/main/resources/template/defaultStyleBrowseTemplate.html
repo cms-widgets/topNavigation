@@ -1,4 +1,4 @@
-<div xmlns:res="http://resource.jiangcai.me" class="topnavbar">
+<div xmlns:res="http://resource.jiangcai.me" class="topnavbar" th:id="${componentId}">
     <div class="navbar navbar-default">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navList">
@@ -25,7 +25,7 @@
                        href="javascript:;" data-hover="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false">首页</a>
 
-                    <ul class="dropdown-menu" th:if="${oneItem['isParent']}">
+                    <ul class="dropdown-menu" th:if="${oneItem['isParent']==true}">
                         <li th:each="twoItem: ${oneItem['children']}">
                             <a class="topNavigation" th:if="${twoItem['flag']==0}"  th:text="${twoItem['name']}"
                                th:href="${twoItem['linkPath']}"
