@@ -12,14 +12,14 @@
         <div class="navbar-collapse collapse navbar-right" id="navList">
             <ul class="nav navbar-nav">
                 <li th:each="oneItem,ontItemStat: ${pageIds}"
-                    th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}"  >
+                    th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}">
 
-                    <a class="topNavigation" th:if="${oneItem['flag']==0}"  th:text="${oneItem['name']}"
+                    <a class="topNavigation" th:if="${oneItem['flag']==0}" th:text="${oneItem['name']}"
                        th:href="${oneItem['linkPath']}"
                        href="javascript:;" data-hover="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false">首页</a>
 
-                    <a class="topNavigation" th:if="${oneItem['flag']==1}"  th:text="${oneItem['name']}"
+                    <a class="topNavigation" th:if="${oneItem['flag']==1}" th:text="${oneItem['name']}"
                        th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(oneItem['linkPath'])
                        !=null?@cmsDataSourceService.findPageInfoContent(oneItem['linkPath']).pagePath:''})}"
                        href="javascript:;" data-hover="dropdown" role="button"
@@ -27,12 +27,12 @@
 
                     <ul class="dropdown-menu" th:if="${oneItem['isParent']}">
                         <li th:each="twoItem: ${oneItem['children']}">
-                            <a class="topNavigation" th:if="${twoItem['flag']==0}"  th:text="${twoItem['name']}"
+                            <a class="topNavigation" th:if="${twoItem['flag']==0}" th:text="${twoItem['name']}"
                                th:href="${twoItem['linkPath']}"
                                href="javascript:;" data-hover="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">首页</a>
 
-                            <a class="topNavigation" th:if="${twoItem['flag']==1}"  th:text="${twoItem['name']}"
+                            <a class="topNavigation" th:if="${twoItem['flag']==1}" th:text="${twoItem['name']}"
                                th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(twoItem['linkPath'])
                                !=null@cmsDataSourceService.findPageInfoContent(twoItem['linkPath']).pagePath:''})}"
                                href="javascript:;" data-hover="dropdown" role="button"
@@ -42,5 +42,6 @@
                 </li>
             </ul>
         </div>
+    </div>
 </div>
 
