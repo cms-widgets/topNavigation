@@ -16,7 +16,11 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>A custom Widget</name>
+    <name>topNavigation</name>
+    <description>
+        顶部导航控件，可以选择页面，也可以添加外链，支持一级、二级导航显示。
+    </description>
+
     <url>https://github.com/huotuinc/CMS</url>
     <organization>
         <name>Hangzhou Hot Technology Co., Ltd.</name>
