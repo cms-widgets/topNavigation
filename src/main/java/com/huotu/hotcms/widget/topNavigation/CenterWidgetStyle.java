@@ -24,7 +24,7 @@ public class CenterWidgetStyle implements WidgetStyle {
 
     @Override
     public String name(Locale locale) {
-        if (locale.equals(Locale.CHINESE)) {
+        if (locale.equals(Locale.CHINA)) {
             return name();
         }
         return "bootstrap style topNavigation";
@@ -32,12 +32,12 @@ public class CenterWidgetStyle implements WidgetStyle {
 
     @Override
     public String description() {
-        return "基于bootstrap样式的   ";
+        return "基于bootstrap样式的居中";
     }
 
     @Override
     public String description(Locale locale) {
-        if (locale.equals(Locale.CHINESE)) {
+        if (locale.equals(Locale.CHINA)) {
             return description();
         }
         return "Based on the bootstrap style by topNavigation";
@@ -45,7 +45,7 @@ public class CenterWidgetStyle implements WidgetStyle {
 
     @Override
     public Resource thumbnail() {
-        return new ClassPathResource("/thumbnail/defaultStyleThumbnail.png", getClass().getClassLoader());
+        return new ClassPathResource("/thumbnail/centerStyle.png", getClass().getClassLoader());
     }
 
     @Override

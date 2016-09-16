@@ -75,6 +75,8 @@ public class WidgetInfo implements Widget{
         Map<String, Resource> map = new HashMap<>();
         map.put("thumbnail/defaultStyleThumbnail.png",new ClassPathResource("thumbnail/defaultStyleThumbnail.png"
                 ,getClass().getClassLoader()));
+        map.put("thumbnail/centerStyle.png", new ClassPathResource("thumbnail/centerStyle.png"
+                , getClass().getClassLoader()));
         map.put("img/logo.png",new ClassPathResource("img/logo.png" ,getClass().getClassLoader()));
         map.put("js/topNavigation.js",new ClassPathResource("js/topNavigation.js" ,getClass().getClassLoader()));
         return map;

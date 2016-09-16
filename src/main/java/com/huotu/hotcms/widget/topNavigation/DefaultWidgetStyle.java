@@ -27,25 +27,25 @@ public class DefaultWidgetStyle implements WidgetStyle{
 
     @Override
     public String name() {
-        return "bootstrap 风格";
+        return "默认";
     }
 
     @Override
     public String name(Locale locale) {
-        if (locale.equals(Locale.CHINESE)) {
+        if (locale.equals(Locale.CHINA)) {
             return name();
         }
-        return "bootstrap style topNavigation";
+        return "default";
     }
 
     @Override
     public String description() {
-        return "基于bootstrap样式的   ";
+        return "基于bootstrap样式的默认样式";
     }
 
     @Override
     public String description(Locale locale) {
-        if (locale.equals(Locale.CHINESE)) {
+        if (locale.equals(Locale.CHINA)) {
             return description();
         }
         return "Based on the bootstrap style by topNavigation";
