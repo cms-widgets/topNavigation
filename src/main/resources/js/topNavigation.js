@@ -4,16 +4,12 @@
 CMSWidgets.initWidget({
     editor: {
         properties: null,
-        saveComponent: function (onSuccess, onFailed) {
-            var that = this;
-            that.properties.pagingTColor = $("input[name='pagingTColor']").val();
-            that.properties.pagingHColor = $("input[name='pagingHColor']").val();
+        saveComponent: function (onFailed) {
+            this.properties.pagingTColor = $("input[name='pagingTColor']").val();
+            this.properties.pagingHColor = $("input[name='pagingHColor']").val();
             var nodes = $.getTreeViewData();
-            that.properties.pageIds = nodes;
-            if (that.properties.pagingTColor != '' && that.properties.pagingHColor != '' && that.properties.pageIds.length > 0) {
-                onSuccess(that.properties)
-                return that.properties;
-            } else {
+            this.properties.pageIds = nodes;
+            if (this.properties.pagingTColor == '' && this.properties.pagingHColor == '' && this.properties.pageIds.length <= 0) {
                 onFailed("组件参数缺少,未能保存,请完善。");
                 return true;
             }
@@ -38,10 +34,7 @@ CMSWidgets.initWidget({
 
         },
         open: function (globalId) {
-            this.properties = widgetProperties(globalId);
             this.initProperties();
-        },
-        close: function (globalId) {
         }
     }
 })

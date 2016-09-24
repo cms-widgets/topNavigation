@@ -29,14 +29,12 @@
                         <li th:each="twoItem: ${oneItem['children']}">
                             <a class="topNavigation" th:if="${twoItem['flag']==0}" th:text="${twoItem['name']}"
                                th:href="${twoItem['linkPath']}"
-                               href="javascript:;" data-hover="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">首页</a>
+                               href="javascript:;">首页</a>
 
                             <a class="topNavigation" th:if="${twoItem['flag']==1}" th:text="${twoItem['name']}"
                                th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(twoItem['linkPath'])
                                !=null@cmsDataSourceService.findPageInfoContent(twoItem['linkPath']).pagePath:''})}"
-                               href="javascript:;" data-hover="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">首页</a>
+                               href="javascript:;">首页</a>
                         </li>
 
                     </ul>

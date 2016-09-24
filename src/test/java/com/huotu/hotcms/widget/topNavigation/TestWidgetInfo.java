@@ -12,6 +12,7 @@ package com.huotu.hotcms.widget.topNavigation;
 import com.huotu.hotcms.widget.ComponentProperties;
 import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
+import com.huotu.widget.test.Editor;
 import com.huotu.widget.test.WidgetTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -35,8 +36,8 @@ public class TestWidgetInfo extends WidgetTest {
     }
 
     @Override
-    protected void editorWork(Widget widget, WebElement editor, Supplier<Map<String, Object>> currentWidgetProperties) {
-        WebElement treeview = editor.findElement(By.id("treeView")).findElement(By.className("ztree"));
+    protected void editorWork(Widget widget, Editor editor, Supplier<Map<String, Object>> currentWidgetProperties) {
+        WebElement treeview = editor.getWebElement().findElement(By.id("treeView")).findElement(By.className("ztree"));
         List<WebElement> lis = treeview.findElements(By.tagName("li"));
         assertThat(lis.size()).isNotEqualTo(0);
         assertThat(lis.size()).isEqualTo(3);
