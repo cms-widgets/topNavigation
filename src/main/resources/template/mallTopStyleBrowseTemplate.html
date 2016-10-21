@@ -1,0 +1,20 @@
+<div xmlns:th="http://www.thymeleaf.org" class="mall-shortcut" th:id="${componentId}">
+    <div class="w">
+        <ul class="fr">
+            <li th:each="oneItem: ${pageIds}">
+
+                <a class="topNavigation link-login" th:if="${(oneItem['visibleValue']=='' or oneItem['visibleValue']==true)
+                and oneItem['flag']==0  }" th:text="${oneItem['name']}"
+                   th:href="${oneItem['linkPath']}"
+                   href="javascript:void(0)">首页</a>
+
+                <a class="topNavigation link-login" th:if="${(oneItem['visibleValue']=='' or oneItem['visibleValue']==true)
+                 and oneItem['flag']==1  }" th:text="${oneItem['name']}"
+                   th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(oneItem['linkPath'])
+                       !=null?@cmsDataSourceService.findPageInfoContent(oneItem['linkPath']).pagePath:''})}"
+                   href="javascript:void(0)">首页</a>
+            </li>
+
+        </ul>
+    </div>
+</div>

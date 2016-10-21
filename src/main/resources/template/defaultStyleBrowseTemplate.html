@@ -1,4 +1,5 @@
-<div xmlns:res="http://resource.jiangcai.me" class="topnavbar" th:id="${componentId}">
+<div xmlns:res="http://resource.jiangcai.me" xmlns:th="http://www.thymeleaf.org" class="topnavbar"
+     th:id="${componentId}">
     <div class="navbar navbar-default">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navList">
@@ -14,12 +15,14 @@
                 <li th:each="oneItem,ontItemStat: ${pageIds}"
                     th:class="${ontItemStat.index==0?'dropdown active':'dropdown'}">
 
-                    <a class="topNavigation" th:if="${oneItem['flag']==0}" th:text="${oneItem['name']}"
+                    <a class="topNavigation" th:if="${(oneItem['visibleValue']=='' or oneItem['visibleValue']==true) and
+                    oneItem['flag']==0}" th:text="${oneItem['name']}"
                        th:href="${oneItem['linkPath']}"
                        href="javascript:;" data-hover="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false">首页</a>
 
-                    <a class="topNavigation" th:if="${oneItem['flag']==1}" th:text="${oneItem['name']}"
+                    <a class="topNavigation" th:if="${ (oneItem['visibleValue']=='' or oneItem['visibleValue']==true) and
+                    oneItem['flag']==1}" th:text="${oneItem['name']}"
                        th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(oneItem['linkPath'])
                        !=null?@cmsDataSourceService.findPageInfoContent(oneItem['linkPath']).pagePath:''})}"
                        href="javascript:;" data-hover="dropdown" role="button"
@@ -27,11 +30,13 @@
 
                     <ul class="dropdown-menu" th:if="${oneItem['isParent']==true}">
                         <li th:each="twoItem: ${oneItem['children']}">
-                            <a class="topNavigation" th:if="${twoItem['flag']==0}" th:text="${twoItem['name']}"
+                            <a class="topNavigation" th:if="${(twoItem['visibleValue']=='' or twoItem['visibleValue']==true) and
+                            twoItem['flag']==0}" th:text="${twoItem['name']}"
                                th:href="${twoItem['linkPath']}"
                                href="javascript:;">首页</a>
 
-                            <a class="topNavigation" th:if="${twoItem['flag']==1}" th:text="${twoItem['name']}"
+                            <a class="topNavigation" th:if="${(twoItem['visibleValue']=='' or twoItem['visibleValue']==true) and
+                            twoItem['flag']==1}" th:text="${twoItem['name']}"
                                th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(twoItem['linkPath'])
                                !=null@cmsDataSourceService.findPageInfoContent(twoItem['linkPath']).pagePath:''})}"
                                href="javascript:;">首页</a>

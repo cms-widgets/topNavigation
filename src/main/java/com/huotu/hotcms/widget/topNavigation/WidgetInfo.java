@@ -9,29 +9,35 @@
 
 package com.huotu.hotcms.widget.topNavigation;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huotu.hotcms.widget.ComponentProperties;
+import com.huotu.hotcms.widget.PreProcessWidget;
 import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
 import me.jiangcai.lib.resource.service.ResourceService;
-import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.http.MediaType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 
 /**
  * @author CJ
  */
-public class WidgetInfo implements Widget{
+public class WidgetInfo implements Widget, PreProcessWidget {
     public static final String VALID_STYLE_TEXT_COLOR = "pagingTColor";
     public static final String VALID_STYLE_TEXT_HOVER_COLOR = "pagingHColor";
     public static final String VALID_PAGE_IDS = "pageIds";
+    private static final Log log = LogFactory.getLog(WidgetInfo.class);
 
     @Override
     public String groupId() {
@@ -66,45 +72,46 @@ public class WidgetInfo implements Widget{
 
     @Override
     public WidgetStyle[] styles() {
-        return new WidgetStyle[]{new CenterWidgetStyle(),new DefaultWidgetStyle()};
+        return new WidgetStyle[]{new CenterWidgetStyle(), new DefaultWidgetStyle(), new MallTopWidgetStyle()};
     }
 
 
     @Override
     public Map<String, Resource> publicResources() {
         Map<String, Resource> map = new HashMap<>();
-        map.put("thumbnail/defaultStyleThumbnail.png",new ClassPathResource("thumbnail/defaultStyleThumbnail.png"
-                ,getClass().getClassLoader()));
+        map.put("thumbnail/defaultStyleThumbnail.png", new ClassPathResource("thumbnail/defaultStyleThumbnail.png"
+                , getClass().getClassLoader()));
         map.put("thumbnail/centerStyle.png", new ClassPathResource("thumbnail/centerStyle.png"
                 , getClass().getClassLoader()));
-        map.put("img/logo.png",new ClassPathResource("img/logo.png" ,getClass().getClassLoader()));
-        map.put("js/topNavigation.js",new ClassPathResource("js/topNavigation.js" ,getClass().getClassLoader()));
+        map.put("thumbnail/mallTopWidgetThumbnail.png", new ClassPathResource("thumbnail/mallTopWidgetThumbnail.png"
+                , getClass().getClassLoader()));
+        map.put("img/logo.png", new ClassPathResource("img/logo.png", getClass().getClassLoader()));
+        map.put("js/topNavigation.js", new ClassPathResource("js/topNavigation.js", getClass().getClassLoader()));
         return map;
     }
 
     @Override
     public Resource widgetDependencyContent(MediaType mediaType) {
-        if (mediaType.isCompatibleWith(CSS)){
-            return  new ClassPathResource("css/topNavigation.css",getClass().getClassLoader());
+        if (mediaType.isCompatibleWith(CSS)) {
+            return new ClassPathResource("css/topNavigation.css", getClass().getClassLoader());
         }
-        if (mediaType.isCompatibleWith(Javascript)){
-            return  new ClassPathResource("js/topNavigation.js",getClass().getClassLoader());
+        if (mediaType.isCompatibleWith(Javascript)) {
+            return new ClassPathResource("js/topNavigation.js", getClass().getClassLoader());
         }
         return null;
     }
 
     @Override
     public void valid(String styleId, ComponentProperties componentProperties) throws IllegalArgumentException {
-        WidgetStyle style = WidgetStyle.styleByID(this,styleId);
+        WidgetStyle style = WidgetStyle.styleByID(this, styleId);
         //加入控件独有的属性验证
         String textColor = (String) componentProperties.get(VALID_STYLE_TEXT_COLOR);
         String hoverColor = (String) componentProperties.get(VALID_STYLE_TEXT_HOVER_COLOR);
         List pageIds = (List) componentProperties.get(VALID_PAGE_IDS);
 
-        if (textColor == null ||  hoverColor == null || pageIds== null || textColor.equals("") ||  hoverColor.equals("") || pageIds.size()<=0) {
+        if (textColor == null || hoverColor == null || pageIds == null || textColor.equals("") || hoverColor.equals("") || pageIds.size() <= 0) {
             throw new IllegalArgumentException("控件属性缺少");
         }
-
     }
 
     @Override
@@ -116,54 +123,126 @@ public class WidgetInfo implements Widget{
     @Override
     public ComponentProperties defaultProperties(ResourceService resourceService) {
         ComponentProperties properties = new ComponentProperties();
-        properties.put("pagingTColor","#000000");
-        properties.put("pagingHColor","#000000");
-        Map<String,Object> map1 = new HashedMap();
-        map1.put("name","首页");
-        map1.put("linkPath","");
-        map1.put("flag",0);
-        map1.put("isParent","false");
-        map1.put("id",1);
+        properties.put("pagingTColor", "#000000");
+        properties.put("pagingHColor", "#000000");
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("name", "首页");
+        map1.put("linkPath", "");
+        map1.put("visibleValue", "");
+        map1.put("flag", 0);
+        map1.put("isParent", "false");
+        map1.put("visible", "");
+        map1.put("visibleName", "");
+        map1.put("id", 1);
 
-        Map<String,Object> map2 = new HashedMap();
-        List<Map<String,Object>> children = new ArrayList<>();
-        Map<String,Object> map21 = new HashedMap();
-        map21.put("name","公司动态");
-        map21.put("linkPath","");
-        map21.put("flag",0);
-        map21.put("pid",2);
+        Map<String, Object> map2 = new HashMap<>();
+        List<Map<String, Object>> children = new ArrayList<>();
+        Map<String, Object> map21 = new HashMap<>();
+        map21.put("name", "公司动态");
+        map21.put("linkPath", "");
+        map21.put("visibleValue", "");
+        map21.put("flag", 0);
+        map21.put("visible", "true");
+        map21.put("visibleName", "'hello lihuaixin'");
+        map21.put("pid", 2);
 
-        Map<String,Object> map22 = new HashedMap();
-        map22.put("name","行业动态");
-        map22.put("linkPath","");
-        map22.put("flag",0);
-        map22.put("pid",2);
+        Map<String, Object> map22 = new HashMap<>();
+        map22.put("name", "行业动态");
+        map22.put("linkPath", "");
+        map22.put("visibleValue", "");
+        map22.put("visible", "!true");
+        map22.put("visibleName", "");
+        map22.put("flag", 0);
+        map22.put("pid", 2);
+        children.add(map21);
         children.add(map21);
         children.add(map22);
 
-        map2.put("name","动态资讯");
-        map2.put("linkPath","");
-        map2.put("isParent","true");
-        map2.put("children",children);
-        map2.put("flag",0);
-        map2.put("id",2);
+        map2.put("name", "动态资讯");
+        map2.put("linkPath", "");
+        map2.put("visibleValue", "");
+        map2.put("isParent", "true");
+        map2.put("visible", "");
+        map2.put("visibleName", "");
+        map2.put("children", children);
+        map2.put("flag", 0);
+        map2.put("id", 2);
 
-        Map<String,Object> map3 = new HashedMap();
-        map3.put("name","关于我们");
-        map3.put("linkPath","");
-        map3.put("isParent","false");
-        map3.put("flag",0);
-        map3.put("id",3);
+        HashMap map3 = new HashMap();
+        map3.put("name", "关于我们");
+        map3.put("linkPath", "");
+        map3.put("visibleValue", "");
+        map3.put("isParent", "false");
+        map3.put("visible", "true");
+        map3.put("visibleName", "");
+        map3.put("flag", 0);
+        map3.put("id", 3);
 
-        List<Map<String,Object>> navbarPageInfoModels = new ArrayList<>();
+        List<Map<String, Object>> navbarPageInfoModels = new ArrayList<>();
         navbarPageInfoModels.add(map1);
         navbarPageInfoModels.add(map2);
         navbarPageInfoModels.add(map3);
 
-        properties.put(VALID_PAGE_IDS,navbarPageInfoModels);
-        properties.put(VALID_STYLE_TEXT_COLOR,"#000000");
-        properties.put(VALID_STYLE_TEXT_HOVER_COLOR,"#666666");
+        properties.put(VALID_PAGE_IDS, navbarPageInfoModels);
+        properties.put(VALID_STYLE_TEXT_COLOR, "#000000");
+        properties.put(VALID_STYLE_TEXT_HOVER_COLOR, "#666666");
         return properties;
     }
 
+
+    @Override
+    public void prepareContext(WidgetStyle style, ComponentProperties properties, Map<String, Object> variables, Map<String, String> parameters) {
+//        ExpressionParser parser = new SpelExpressionParser();
+//        Expression exp = parser.parseExpression("!loginOrNot()");
+//        EvaluationContext context = new StandardEvaluationContext();
+//        Boolean flag = (Boolean) exp.getValue(context);
+
+//        ExpressionParser parser = new SpelExpressionParser();
+//        Expression exp = parser.parseExpression("getLoginUserName()");
+//        EvaluationContext context = new StandardEvaluationContext();
+//        String name = exp.getValue(context,String.class);
+        List<Map<String, Object>> list = (List<Map<String, Object>>) properties.get(VALID_PAGE_IDS);
+        ExpressionParser parser = new SpelExpressionParser();
+        EvaluationContext context = new StandardEvaluationContext();
+        context.setVariable("String", new String());
+        context.setVariable("Boolean", new Boolean(null));
+        for (Map<String, Object> map : list) {
+            String visible = (String) map.get("visible");
+            if (visible != null && !visible.equals("")) {
+                Expression exp = parser.parseExpression(visible);
+                Object value = exp.getValue(context);
+                map.replace("visibleValue", value);
+            }
+            String visibleName = (String) map.get("visibleName");
+            if (visibleName != null && !visibleName.equals("")) {
+                Expression exp = parser.parseExpression(visibleName);
+                Object value = exp.getValue(context);
+                map.replace("name", value);
+            }
+            String isParent = (String) map.get("isParent");
+            if (isParent.equals("true")) {
+                List<Map<String, Object>> children = (List<Map<String, Object>>) map.get("children");
+                for (Map<String, Object> child : children) {
+                    String childVisible = (String) child.get("visible");
+                    if (childVisible != null && !childVisible.equals("")) {
+                        Expression exp = parser.parseExpression(childVisible);
+                        Object value = exp.getValue(context);
+                        child.replace("visibleValue", value);
+                    }
+                    String childVisibleName = (String) child.get("visibleName");
+                    if (childVisibleName != null && !childVisibleName.equals("")) {
+                        Expression exp = parser.parseExpression(childVisibleName);
+                        Object value = exp.getValue(context);
+                        child.replace("name", value);
+                    }
+                }
+            }
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            log.error(objectMapper.writeValueAsString(list));
+        } catch (JsonProcessingException e) {
+        }
+
+    }
 }
