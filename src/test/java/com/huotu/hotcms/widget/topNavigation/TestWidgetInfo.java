@@ -68,8 +68,8 @@ public class TestWidgetInfo extends WidgetTest {
         WebElement webElement = uiChanger.apply(properties);
         List<WebElement> tonavs = webElement.findElements(By.className("topNavigation"));
         assertThat(tonavs.get(0).getText()).isEqualToIgnoringCase("首页");
-        List<WebElement> lis = webElement.findElements(By.className("dropdown"));
-        assertThat(lis.size()).isEqualTo(3);
+//        List<WebElement> lis = webElement.findElements(By.className("dropdown"));
+//        assertThat(lis.size()).isEqualTo(3);
     }
 
     @Override

@@ -17,95 +17,67 @@ CMSWidgets.initWidget({
         initProperties: function () {
             var that = this;
             if (that.properties.pageIds == undefined) {
-                // var node = [
-                //     {id: 1, name: '${login.getLoginName()}', flag: 0, linkPath: 'www',visible:"#{login.loginOrNot()}"}
-                //     , { id: 2, name: '首页2', flag: 0, linkPath: 'www', visible:""}
-                //     , {id: 3, name: '首页3', flag: 0, linkPath: 'www',visible:""}
-                //     ];
 
-                var node = [
-                    {
-                        id: 1,
-                        name: '',
-                        visibleName: 'hello lihuaixin',
-                        flag: 0,
-                        linkPath: '/memberCenter',
-                        visible: 'true',
-                        visibleValue: ''
-                    },
-                    {
-                        id: 2,
-                        name: '你好请登录，注册',
-                        visibleName: '',
-                        flag: 0,
-                        linkPath: '/login',
-                        visible: '!true',
-                        visibleValue: ''
-                    },
-
-                    {
-                        id: 3,
-                        name: '我的订单',
-                        visibleName: '',
-                        flag: 0,
-                        linkPath: '/orders',
-                        visible: 'true',
-                        visibleValue: ''
-                    },
-                    {
-                        id: 4,
-                        name: '我的订单',
-                        visibleName: '',
-                        flag: 0,
-                        linkPath: '/login',
-                        visible: '!true',
-                        visibleValue: ''
-                    },
-                    {
-                        id: 5,
-                        name: '个人中心',
-                        visibleName: '',
-                        flag: 0,
-                        linkPath: '/memberCenter',
-                        visible: 'true',
-                        visibleValue: ''
-                    },
-                    {
-                        id: 5,
-                        name: '个人中心',
-                        visibleName: '',
-                        flag: 0,
-                        linkPath: '/login',
-                        visible: '!true',
-                        visibleValue: ''
-                    },
-
-                    {
-                        id: 5,
-                        name: '企业采购',
-                        visibleName: '',
-                        flag: 0,
-                        linkPath: '/EnterpriseProcurement',
-                        visible: '',
-                        visibleValue: ''
-                    },
-                    {
-                        id: 5,
-                        name: '企业采购',
-                        visibleName: '',
-                        flag: 0,
-                        linkPath: '/EnterpriseProcurement',
-                        visible: '',
-                        visibleValue: ''
-                    }
-                ];
+                var node = [{
+                    "flag": 0,
+                    "isParent": "false",
+                    "visible": "",
+                    "linkPath": "",
+                    "name": "首页",
+                    "visibleName": "",
+                    "visibleValue": "",
+                    "id": 1
+                }, {
+                    "isParent": "true",
+                    "visible": "",
+                    "flag": 0,
+                    "linkPath": "",
+                    "children": [{
+                        "flag": 0,
+                        "visible": "true",
+                        "linkPath": "",
+                        "name": "hello lihuaixin",
+                        "visibleName": "'hello lihuaixin'",
+                        "visibleValue": true,
+                        "pid": 2
+                    }, {
+                        "flag": 0,
+                        "visible": "true",
+                        "linkPath": "",
+                        "name": "hello lihuaixin",
+                        "visibleName": "'hello lihuaixin'",
+                        "visibleValue": true,
+                        "pid": 2
+                    }, {
+                        "visible": "!true",
+                        "flag": 0,
+                        "linkPath": "",
+                        "name": "行业动态",
+                        "visibleName": "",
+                        "visibleValue": false,
+                        "pid": 2
+                    }],
+                    "name": "动态资讯",
+                    "visibleName": "",
+                    "visibleValue": "",
+                    "id": 2
+                }, {
+                    "isParent": "false",
+                    "visible": "true",
+                    "flag": 0,
+                    "linkPath": "",
+                    "name": "关于我们",
+                    "visibleName": "",
+                    "visibleValue": true,
+                    "id": 3
+                }];
 
                 $('#treeView').addTreeView({
                     treeNodes: node
                 });
             } else {
                 $('#treeView').addTreeView({
-                    treeNodes:that.properties.pageIds
+                    treeNodes: that.properties.pageIds
                 });
             }
         },
@@ -114,32 +86,3 @@ CMSWidgets.initWidget({
         }
     }
 })
-
-var node = [
-    {
-        id: 1,
-        name: '',
-        visibleName: 'getLoginUserName()',
-        flag: 0,
-        linkPath: '/memberCenter',
-        visible: 'loginOrNot()',
-        visibleValue: ''
-    },
-    {id: 2, name: '你好请登录，注册', visibleName: '', flag: 0, linkPath: '/login', visible: '!loginOrNot()', visibleValue: ''},
-
-    {id: 3, name: '我的订单', visibleName: '', flag: 0, linkPath: '/orders', visible: 'loginOrNot()', visibleValue: ''},
-    {id: 4, name: '我的订单', visibleName: '', flag: 0, linkPath: '/login', visible: '!loginOrNot()', visibleValue: ''},
-    {
-        id: 5,
-        name: '个人中心',
-        visibleName: '',
-        flag: 0,
-        linkPath: '/memberCenter',
-        visible: 'loginOrNot()',
-        visibleValue: ''
-    },
-    {id: 5, name: '个人中心', visibleName: '', flag: 0, linkPath: '/login', visible: '!loginOrNot()', visibleValue: ''},
-
-    {id: 5, name: '企业采购', visibleName: '', flag: 0, linkPath: '/EnterpriseProcurement', visible: '', visibleValue: ''},
-    {id: 5, name: '企业采购', visibleName: '', flag: 0, linkPath: '/EnterpriseProcurement', visible: '', visibleValue: ''}
-];

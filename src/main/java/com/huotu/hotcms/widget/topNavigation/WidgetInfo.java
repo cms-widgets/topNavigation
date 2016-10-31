@@ -9,8 +9,6 @@
 
 package com.huotu.hotcms.widget.topNavigation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huotu.hotcms.widget.ComponentProperties;
 import com.huotu.hotcms.widget.PreProcessWidget;
 import com.huotu.hotcms.widget.Widget;
@@ -192,15 +190,7 @@ public class WidgetInfo implements Widget, PreProcessWidget {
 
     @Override
     public void prepareContext(WidgetStyle style, ComponentProperties properties, Map<String, Object> variables, Map<String, String> parameters) {
-//        ExpressionParser parser = new SpelExpressionParser();
-//        Expression exp = parser.parseExpression("!loginOrNot()");
-//        EvaluationContext context = new StandardEvaluationContext();
-//        Boolean flag = (Boolean) exp.getValue(context);
 
-//        ExpressionParser parser = new SpelExpressionParser();
-//        Expression exp = parser.parseExpression("getLoginUserName()");
-//        EvaluationContext context = new StandardEvaluationContext();
-//        String name = exp.getValue(context,String.class);
         List<Map<String, Object>> list = (List<Map<String, Object>>) properties.get(VALID_PAGE_IDS);
         ExpressionParser parser = new SpelExpressionParser();
         EvaluationContext context = new StandardEvaluationContext();
@@ -238,11 +228,12 @@ public class WidgetInfo implements Widget, PreProcessWidget {
                 }
             }
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            log.error(objectMapper.writeValueAsString(list));
-        } catch (JsonProcessingException e) {
-        }
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        try {
+//            log.error(objectMapper.writeValueAsString(list));
+//        } catch (JsonProcessingException e) {
+//
+//        }
 
     }
 }
