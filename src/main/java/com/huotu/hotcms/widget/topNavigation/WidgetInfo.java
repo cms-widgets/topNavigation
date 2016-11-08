@@ -65,7 +65,7 @@ public class WidgetInfo implements Widget, PreProcessWidget {
 
     @Override
     public String dependVersion() {
-        return "1.0-SNAPSHOT";
+        return "1.1.0";
     }
 
     @Override
@@ -194,6 +194,7 @@ public class WidgetInfo implements Widget, PreProcessWidget {
         List<Map<String, Object>> list = (List<Map<String, Object>>) properties.get(VALID_PAGE_IDS);
         ExpressionParser parser = new SpelExpressionParser();
         EvaluationContext context = new StandardEvaluationContext();
+        //todo 导航
         context.setVariable("String", new String());
         context.setVariable("Boolean", new Boolean(null));
         for (Map<String, Object> map : list) {
@@ -228,12 +229,7 @@ public class WidgetInfo implements Widget, PreProcessWidget {
                 }
             }
         }
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        try {
-//            log.error(objectMapper.writeValueAsString(list));
-//        } catch (JsonProcessingException e) {
-//
-//        }
+
 
     }
 }
