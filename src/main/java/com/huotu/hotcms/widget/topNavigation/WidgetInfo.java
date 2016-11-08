@@ -210,8 +210,8 @@ public class WidgetInfo implements Widget, PreProcessWidget {
                 Object value = exp.getValue(context);
                 map.replace("name", value);
             }
-            String isParent = (String) map.get("isParent");
-            if (isParent.equals("true")) {
+            String isParent = map.get("isParent").toString();
+            if (isParent != null && isParent.equals("true")) {
                 List<Map<String, Object>> children = (List<Map<String, Object>>) map.get("children");
                 for (Map<String, Object> child : children) {
                     String childVisible = (String) child.get("visible");
