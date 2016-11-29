@@ -55,6 +55,6 @@ public class CenterWidgetStyle implements WidgetStyle {
 
     @Override
     public Resource browseTemplate() {
-        return new ClassPathResource("/template/centerStyleBrowseTemplate.html", getClass().getClassLoader());
+        return new ClassPathResource("/template/defaultStyleBrowseTemplate.html", getClass().getClassLoader());
     }
 }

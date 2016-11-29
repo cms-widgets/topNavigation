@@ -9,10 +9,8 @@
 
 package com.huotu.hotcms.widget.topNavigation;
 
-import com.huotu.hotcms.widget.ComponentProperties;
-import com.huotu.hotcms.widget.PreProcessWidget;
-import com.huotu.hotcms.widget.Widget;
-import com.huotu.hotcms.widget.WidgetStyle;
+import com.huotu.hotcms.service.service.MallService;
+import com.huotu.hotcms.widget.*;
 import me.jiangcai.lib.resource.service.ResourceService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,6 +23,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.http.MediaType;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -123,6 +122,9 @@ public class WidgetInfo implements Widget, PreProcessWidget {
         ComponentProperties properties = new ComponentProperties();
         properties.put("pagingTColor", "#000000");
         properties.put("pagingHColor", "#000000");
+        properties.put("layout", "topnavbar-full");
+        properties.put("position", "");
+
         Map<String, Object> map1 = new HashMap<>();
         map1.put("name", "首页");
         map1.put("linkPath", "");
@@ -184,19 +186,29 @@ public class WidgetInfo implements Widget, PreProcessWidget {
         properties.put(VALID_PAGE_IDS, navbarPageInfoModels);
         properties.put(VALID_STYLE_TEXT_COLOR, "#000000");
         properties.put(VALID_STYLE_TEXT_HOVER_COLOR, "#666666");
+        properties.put("contentCenter", "1200px");
+        properties.put("topnavbarBody", "1020px");
+        properties.put("topnavbarHeight", "80px");
         return properties;
     }
 
 
     @Override
     public void prepareContext(WidgetStyle style, ComponentProperties properties, Map<String, Object> variables, Map<String, String> parameters) {
-
+        MallService mallService = getCMSServiceFromCMSContext(MallService.class);
+        try {
+            variables.put("mallDomain", mallService.getMallDomain(CMSContext.RequestContext().getSite().getOwner()));
+        } catch (IOException e) {
+            log.error("通讯异常", e);
+            variables.put("mallDomain", null);
+        }
+        variables.put("customerId", CMSContext.RequestContext().getSite().getOwner() != null
+                ? CMSContext.RequestContext().getSite().getOwner().getCustomerId() : "");
         List<Map<String, Object>> list = (List<Map<String, Object>>) properties.get(VALID_PAGE_IDS);
         ExpressionParser parser = new SpelExpressionParser();
         EvaluationContext context = new StandardEvaluationContext();
-        //todo 导航
-        context.setVariable("String", new String());
-        context.setVariable("Boolean", new Boolean(null));
+        context.setVariable("mall", mallService);
+
         for (Map<String, Object> map : list) {
             String visible = (String) map.get("visible");
             if (visible != null && !visible.equals("")) {
@@ -229,7 +241,5 @@ public class WidgetInfo implements Widget, PreProcessWidget {
                 }
             }
         }
-
-
     }
 }

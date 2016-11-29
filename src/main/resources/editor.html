@@ -1,17 +1,86 @@
-<div class="borderBoxs">
-    <form class="form-horizontal">
-        <div class="form-group clearfix">
-            <label class="col-md-3 control-label">文字颜色</label>
-            <div class="col-md-3">
-                <input type="text" name="pagingTColor" th:value="${pagingTColor}" class="form-control color-picker ">
-            </div>
-            <label class="col-md-3 control-label ">选中颜色</label>
-            <div class="col-md-3">
-                <input type="text" name="pagingHColor" th:value="${pagingHColor}" class="form-control color-picker ">
-            </div>
+<div xmlns:th="http://www.thymeleaf.org" class="borderBoxs">
+    <div class="form-group clearfix">
+        <label class="col-xs-3">通栏 / 居中</label>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                <input type="radio" name="layout" value="topnavbar-full" th:checked="${layout}=='topnavbar-full'"> 通栏
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="layout" value="topnavbar-center" th:checked="${layout}=='topnavbar-center'">
+                居中
+            </label>
         </div>
-        <div>
-            <div id="treeView"></div>
+        <label class="col-xs-3">普通 / 固定</label>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                <input type="radio" name="position" value="" th:checked="${position}==''"> 普通
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="position" value="topnavbar-absolute"
+                       th:checked="${position} == 'topnavbar-absolute'"> 固定
+            </label>
         </div>
-    </form>
+    </div>
+    <div class="form-group clearfix js-topnavbar-width show">
+        <label class="col-xs-3 control-label">导航条宽度：</label>
+        <div class="col-xs-3">
+            <input type="text" name="contentCenter" class="form-control" th:value="${contentCenter}">
+        </div>
+        <label class="col-xs-3 control-label">总栏目宽度：</label>
+        <div class="col-xs-3">
+            <input type="text" name="topnavbarBody" class="form-control" th:value="${topnavbarBody}">
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <label class="col-xs-3 control-label">导航条高度：</label>
+        <div class="col-xs-3">
+            <input type="text" name="topnavbarHeight" class="form-control" th:value="${topnavbarHeight}">
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <label class="col-xs-3 control-label">背景颜色：</label>
+        <div class="col-xs-3">
+            <input type="text" name="backgroundColor" class="form-control color-picker" th:value="${backgroundColor}">
+        </div>
+        <label class="col-xs-3 control-label">文字颜色：</label>
+        <div class="col-xs-3">
+            <input type="text" name="pagingTColor" class="form-control color-picker" th:value="${pagingTColor}">
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <label class="col-xs-3 control-label">栏目激活颜色：</label>
+        <div class="col-xs-3">
+            <input type="text" name="activeColor" class="form-control color-picker" th:value="${activeColor}">
+        </div>
+        <label class="col-xs-3 control-label">选中颜色：</label>
+        <div class="col-xs-3">
+            <input type="text" name="pagingHColor" class="form-control color-picker" th:value="${pagingHColor}">
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <ul class="attribute-layout">
+            <li class="attribute-item title-element">
+                <strong>&nbsp;&nbsp;内边距：</strong>
+            </li>
+            <li class="attribute-item">
+                <input type="text" name="topPaddingTop" th:value="${topPaddingTop}" class="form-control"
+                       placeholder="上">
+            </li>
+            <li class="attribute-item">
+                <input type="text" name="paddingRight" th:value="${paddingRight}" class="form-control" placeholder="右">
+            </li>
+            <li class="attribute-item">
+                <input type="text" name="topPaddingBottom" th:value="${topPaddingBottom}" class="form-control"
+                       placeholder="下">
+            </li>
+            <li class="attribute-item">
+                <input type="text" name="paddingLeft" th:value="${paddingLeft}" class="form-control" placeholder="左">
+            </li>
+
+        </ul>
+    </div>
+    <div>
+        <div id="treeView"></div>
+    </div>
+
 </div>

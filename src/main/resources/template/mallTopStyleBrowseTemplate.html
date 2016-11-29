@@ -1,5 +1,6 @@
 <div xmlns:th="http://www.thymeleaf.org" class="mall-shortcut" th:id="${componentId}">
     <div class="w">
+        <!--/*@thymesVar id="site" type="com.huotu.hotcms.service.entity.Site"*/-->
         <ul class="fr">
             <li th:each="oneItem: ${pageIds}">
 
@@ -13,8 +14,12 @@
                    th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(oneItem['linkPath'])
                        !=null?@cmsDataSourceService.findPageInfoContent(oneItem['linkPath']).pagePath:''})}"
                    href="javascript:void(0)">首页</a>
-            </li>
 
+                <a class="topNavigation link-login" th:if="${(oneItem['visibleValue']=='' or oneItem['visibleValue']==true)
+                 and oneItem['flag']==2  }" th:text="${oneItem['name']}"
+                   th:href="${mallDomain+oneItem['linkPath']+customerId}"
+                   href="javascript:void(0)">首页</a>
+            </li>
         </ul>
     </div>
 </div>

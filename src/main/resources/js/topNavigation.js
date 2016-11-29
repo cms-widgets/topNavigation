@@ -7,6 +7,19 @@ CMSWidgets.initWidget({
         saveComponent: function (onFailed) {
             this.properties.pagingTColor = $("input[name='pagingTColor']").val();
             this.properties.pagingHColor = $("input[name='pagingHColor']").val();
+
+            this.properties.layout = $("input[name='layout']:checked").val();
+            this.properties.position = $("input[name='position']:checked").val();
+            this.properties.contentCenter = $("input[name='contentCenter']").val() == '' ? '1200px' : $("input[name='contentCenter']").val();
+            this.properties.topnavbarBody = $("input[name='topnavbarBody']").val() == '' ? '1020px' : $("input[name='topnavbarBody']").val();
+            this.properties.topnavbarHeight = $("input[name='topnavbarHeight']").val() == '' ? '80px' : $("input[name='topnavbarHeight']").val();
+            this.properties.backgroundColor = $("input[name='backgroundColor']").val();
+            this.properties.activeColor = $("input[name='activeColor']").val();
+            this.properties.topPaddingTop = $("input[name='topPaddingTop']").val();
+            this.properties.paddingRight = $("input[name='paddingRight']").val();
+            this.properties.topPaddingBottom = $("input[name='topPaddingBottom']").val();
+            this.properties.paddingLeft = $("input[name='paddingLeft']").val();
+
             var nodes = $.getTreeViewData();
             this.properties.pageIds = nodes;
             if (this.properties.pagingTColor == '' && this.properties.pagingHColor == '' && this.properties.pageIds.length <= 0) {
@@ -77,7 +90,12 @@ CMSWidgets.initWidget({
                 });
             } else {
                 $('#treeView').addTreeView({
-                    treeNodes: that.properties.pageIds
+                    treeNodes: that.properties.pageIds,
+                    extraItems: [{
+                        name: '个人中心',
+                        path: '/Mall/UserCenter/',
+                        flag: '2'
+                    }]
                 });
             }
         },
