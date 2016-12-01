@@ -19,7 +19,6 @@ CMSWidgets.initWidget({
             this.properties.paddingRight = $("input[name='paddingRight']").val();
             this.properties.topPaddingBottom = $("input[name='topPaddingBottom']").val();
             this.properties.paddingLeft = $("input[name='paddingLeft']").val();
-
             var nodes = $.getTreeViewData();
             this.properties.pageIds = nodes;
             if (this.properties.pagingTColor == '' && this.properties.pagingHColor == '' && this.properties.pageIds.length <= 0) {

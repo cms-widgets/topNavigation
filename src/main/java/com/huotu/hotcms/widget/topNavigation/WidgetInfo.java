@@ -197,17 +197,17 @@ public class WidgetInfo implements Widget, PreProcessWidget {
     public void prepareContext(WidgetStyle style, ComponentProperties properties, Map<String, Object> variables, Map<String, String> parameters) {
         MallService mallService = getCMSServiceFromCMSContext(MallService.class);
         try {
-            variables.put("mallDomain", mallService.getMallDomain(CMSContext.RequestContext().getSite().getOwner()));
+            variables.put("mallDomain", "http://" + mallService.getMallDomain(CMSContext.RequestContext().getSite().getOwner()));
         } catch (IOException e) {
             log.error("通讯异常", e);
-            variables.put("mallDomain", null);
+            variables.put("mallDomain", "#");
         }
         variables.put("customerId", CMSContext.RequestContext().getSite().getOwner() != null
                 ? CMSContext.RequestContext().getSite().getOwner().getCustomerId() : "");
         List<Map<String, Object>> list = (List<Map<String, Object>>) properties.get(VALID_PAGE_IDS);
         ExpressionParser parser = new SpelExpressionParser();
         EvaluationContext context = new StandardEvaluationContext();
-        context.setVariable("mall", mallService);
+        context.setVariable("login", this);
 
         for (Map<String, Object> map : list) {
             String visible = (String) map.get("visible");
@@ -241,5 +241,19 @@ public class WidgetInfo implements Widget, PreProcessWidget {
                 }
             }
         }
+    }
+
+    public boolean isLogin() {
+        MallService mallService = getCMSServiceFromCMSContext(MallService.class);
+        return mallService.isLogin(CMSContext.RequestContext().getRequest(), CMSContext.RequestContext().getSite().getOwner());
+    }
+
+    public String loginUserName() {
+        MallService mallService = getCMSServiceFromCMSContext(MallService.class);
+        try {
+            return mallService.getLoginUserName(CMSContext.RequestContext().getRequest(), CMSContext.RequestContext().getSite().getOwner());
+        } catch (IOException e) {
+        }
+        return null;
     }
 }
