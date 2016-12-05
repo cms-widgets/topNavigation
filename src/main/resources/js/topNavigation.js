@@ -19,8 +19,7 @@ CMSWidgets.initWidget({
             this.properties.paddingRight = $("input[name='paddingRight']").val();
             this.properties.topPaddingBottom = $("input[name='topPaddingBottom']").val();
             this.properties.paddingLeft = $("input[name='paddingLeft']").val();
-            var nodes = $.getTreeViewData();
-            this.properties.pageIds = nodes;
+            this.properties.pageIds = $.getTreeViewData();
             if (this.properties.pagingTColor == '' && this.properties.pagingHColor == '' && this.properties.pageIds.length <= 0) {
                 onFailed("组件参数缺少,未能保存,请完善。");
                 return true;
@@ -51,7 +50,8 @@ CMSWidgets.initWidget({
                         "name": "hello lihuaixin",
                         "visibleName": "'hello lihuaixin'",
                         "visibleValue": true,
-                        "pid": 2
+                        "pid": 2,
+                        "id": 21
                     }, {
                         "flag": 0,
                         "visible": "true",
@@ -59,7 +59,8 @@ CMSWidgets.initWidget({
                         "name": "hello lihuaixin",
                         "visibleName": "'hello lihuaixin'",
                         "visibleValue": true,
-                        "pid": 2
+                        "pid": 2,
+                        "id": 22
                     }, {
                         "visible": "!true",
                         "flag": 0,
@@ -67,7 +68,8 @@ CMSWidgets.initWidget({
                         "name": "行业动态",
                         "visibleName": "",
                         "visibleValue": false,
-                        "pid": 2
+                        "pid": 2,
+                        "id": 23
                     }],
                     "name": "动态资讯",
                     "visibleName": "",
