@@ -1,75 +1,75 @@
 /*导航背景颜色*/
 /*[[${'#'+componentId +' .topnavbar-new .content-center'}]]*/
 {
-    background-color: /*[[${backgroundColor}]]*/ #fff
-;
+    background-color: /*[[${backgroundColor}]]*/ #fff;
 }
 /*导航文字颜色*/
 /*[[${'#'+componentId +' .topnavbar-new a '}]]*/
 {
-    color: /*[[${pagingTColor}]]*/ #333
-;
+    color: /*[[${pagingTColor}]]*/ #333;
 }
 
 /*导航内边距*/
 /*[[${'#'+componentId +' .topnavbar-new '}]]*/
 {
-    padding-top: /*[[${topPaddingTop}]]*/ 0
-;
-    padding-right: /*[[${paddingRight}]]*/ 0
-;
-    padding-bottom: /*[[${topPaddingBottom}]]*/ 0
-;
-    padding-left: /*[[${paddingLeft}]]*/ 0
-;
+    padding-top: /*[[${topPaddingTop}]]*/ 0;
+    padding-right: /*[[${paddingRight}]]*/ 0;
+    padding-bottom: /*[[${topPaddingBottom}]]*/ 0;
+    padding-left: /*[[${paddingLeft}]]*/ 0;
 }
 /*导航条高度*/
 /*[[${'#'+componentId +' .topnavbar-new'}]]*/
 {
-    height: /*[[${topnavbarHeight}]]*/ 80px
-;
+    height: /*[[${topnavbarHeight}]]*/ 80px;
 }
 /*导航条高度*/
 /*[[${'#'+componentId +' .topnavbar-new .topnavbar-header > img'}]]*/
 {
-    height: /*[[${topnavbarHeight}]]*/ 80px
-;
+    height: /*[[${topnavbarHeight}]]*/ 80px;
 }
 
 @media (max-width: 991px) {
     /*导航条高度*/
-    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body'}]]*/ {
-    top: /*[[${topnavbarHeight}]]*/ 80px;
-}
+    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body'}]]*/
+    {
+        top: /*[[${topnavbarHeight}]]*/ 80px;
+    }
 }
 
 @media (min-width: 992px) {
     /*栏目激活颜色*/
-    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body > ul .active a'}]]*/ {
-    border-bottom: 3px solid /*[[${activeColor}]]*/ #000;
-}
+    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body > ul .active a'}]]*/
+    {
+        border-bottom: 3px solid /*[[${activeColor}]]*/ #000;
+    }
     /*栏目选中颜色*/
-    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body > ul > li a:hover '}]]*/ {
-    background-color: /*[[${pagingHColor}]]*/ #ebebeb;
-}
-    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body > ul .drop-down .drop-down-menu a:hover '}]]*/ {
-    background-color: /*[[${pagingHColor}]]*/ #ebebeb;
-}
+    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body > ul > li a:hover '}]]*/
+    {
+        background-color: /*[[${pagingHColor}]]*/ #ebebeb;
+    }
+    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body > ul .drop-down .drop-down-menu a:hover '}]]*/
+    {
+        background-color: /*[[${pagingHColor}]]*/ #ebebeb;
+    }
     /*导航条宽度*/
-    /*[[${'#'+componentId +' .topnavbar-center .content-center '}]]*/ {
-    width: /*[[${contentCenter}]]*/ 1200px;
-}
+    /*[[${'#'+componentId +' .topnavbar-center .content-center '}]]*/
+    {
+        width: /*[[${contentCenter}]]*/ 1200px;
+    }
     /*总栏目宽度*/
-    /*[[${'#'+componentId +' .topnavbar-center .topnavbar-body '}]]*/ {
-    width: /*[[${topnavbarBody}]]*/ 1000px;
-}
+    /*[[${'#'+componentId +' .topnavbar-center .topnavbar-body '}]]*/
+    {
+        width: /*[[${topnavbarBody}]]*/ 1000px;
+    }
     /*导航条高度*/
-    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body '}]]*/ {
-    height: /*[[${topnavbarHeight}]]*/ 80px;
-    line-height: /*[[${topnavbarHeight}]]*/ 80px;
-}
+    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body '}]]*/
+    {
+        height: /*[[${topnavbarHeight}]]*/ 80px;
+        line-height: /*[[${topnavbarHeight}]]*/ 80px;
+    }
     /*导航条高度*/
-    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body > ul .active a '}]]*/ {
-    height: /*[[${topnavbarHeight}]]*/ 80px;
-}
+    /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body > ul .active a '}]]*/
+    {
+        height: /*[[${topnavbarHeight}]]*/ 80px;
+    }
 }
