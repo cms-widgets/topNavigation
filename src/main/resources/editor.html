@@ -21,7 +21,8 @@
             </label>
         </div>
     </div>
-    <div class="form-group clearfix js-topnavbar-width show">
+    <div class="form-group clearfix js-topnavbar-width hide"
+         th:class="'form-group clearfix js-topnavbar-width ' + ${position}==' '? 'show' : 'hide'">
         <label class="col-xs-3 control-label">导航条宽度：</label>
         <div class="col-xs-3">
             <input type="text" name="contentCenter" class="form-control" th:value="${contentCenter}">
