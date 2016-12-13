@@ -27,7 +27,10 @@
 {
     height: /*[[${topnavbarHeight}]]*/ 80px;
 }
-
+/*修改导航字体大小 navFontSize*/
+.topnavbar-new a {
+    font-size: 12px;
+}
 @media (max-width: 991px) {
     /*导航条高度*/
     /*[[${'#'+componentId +' .topnavbar-new .topnavbar-body'}]]*/
